@@ -23,6 +23,15 @@ class Game {
     // List of character types
     var characterTypes = ["Le Combattant", "Le Mage", "Le Colosse", "Le Nain"]
     
+    // When the game is over, then the variable 'gameOver' is true
+    var gameOver = false
+    
+    // Rounds' number in the game. Initialized to 0 at the beginning
+    var rounds = 0
+    
+    // Winner's name
+    var winner = String()
+    
     func run(){
         
         description()
@@ -137,6 +146,203 @@ class Game {
             }
         }
         print("\n------------------------------------------------------------------\n")
+    }
+    
+    // Start the fight !
+    func start(){
+        
+        // Recall teams' state
+        teamsState()
+        
+        print("\n******************************************************************\n")
+        print("Il est temps de rentrer dans l'ârene !")
+        print("\n******************************************************************\n")
+        
+        // The game will be finished when the variable 'gameOver' is true
+        while !gameOver{
+            
+            var index = 0
+            for player in players {
+                
+                var team = player.team
+                
+                // Step 1 : Select one character in the player's team
+                print("\(player.name), choisissez un personnage de votre équipe :")
+                if let choice = readLine(){
+                    let choiceAsInt = Int(choice)!
+                    
+                    // Check the number selected by player to choose a character in team
+                    if choiceAsInt < 1 || choiceAsInt > 3{
+                        print("Vous devez choisir un chiffre entre 1 et 3")
+                    }
+                        // If first choice is ok, then provide a random step...
+                    else{
+                        
+                        // Save a number >= 1 & < 8 at random.
+                        var random = Int(arc4random_uniform(UInt32(8)))
+                        
+                        // Step 2 : Optional...
+                        // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
+                        // See emum Box in Box.swift file
+                        if random == index {
+                            
+                            //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
+                            if let mage = team[choiceAsInt-1] as? Mage{
+                                if random > 4 {
+                                    random -= 4
+                                }
+                                
+                                // See the 'carePower' function details below
+                                let carePowerAtRandom = carePower(atRandom: random)
+                                
+                                // Mage's power is increased
+                                mage.care = carePowerAtRandom.rawValue
+                                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom.rawValue) ")
+                            }
+                                // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
+                            else{
+                                
+                                // See the 'carePower' function details below
+                                let weaponAtRandom = weapon(atRandom: random)
+                                team[choiceAsInt-1].strength = weaponAtRandom.rawValue
+                                print("Vous avez une nouvelle arme ! Qui vous donne une force de \(weaponAtRandom.rawValue) ")
+                            }
+                        }
+                        
+                        // Step 3 : Select the opponent character...
+                        print("\(player.name), choisissez une cible dans l'équipe adverse ou un personnage de votre équipe si vous venez de sélectionner votre Mage :")
+                        
+                        // Check the number selected to choose the character
+                        if let targetIndex = readLine(){
+                            let targetAsInt = Int(targetIndex)!
+                            if targetAsInt < 1 || choiceAsInt > 3{
+                                print("Vous devez choisir un chiffre entre 1 et 3")
+                            }
+                                
+                                // Manage interactions between characters : results of strength, health points...
+                            else{
+                                var target: Character
+                                
+                                // Separate Mage's case
+                                if let mage = team[choiceAsInt-1] as? Mage{
+                                    
+                                    mage.care(target: player.team[targetAsInt-1])
+                                    
+                                    // Initialized Mage's care points default in case "step 2 optional" (see previously over) has been accomplished...
+                                    mage.care = 20
+                                }
+                                else{
+                                    
+                                    if index == 0{
+                                        
+                                        // Save, implement action... See 'strike' function in 'Player' class for more details
+                                        target = players[1].team[targetAsInt-1]
+                                        team[choiceAsInt-1].strike(target: target, player: players[1])
+                                        
+                                        // All player's characters are dead
+                                        if players[1].team.count == 0{
+                                            
+                                            // The game is over
+                                            gameOver = true
+                                            
+                                            // Save the winner's name
+                                            winner = player.name
+                                        }
+                                    }
+                                    else{
+                                        
+                                        // Save, implement action... See 'strike' function in 'Player' class for more details
+                                        target = players[0].team[targetAsInt-1]
+                                        team[choiceAsInt-1].strike(target: target, player: players[0])
+                                        
+                                        // All player's characters are dead
+                                        if players[0].team.count == 0{
+                                            
+                                            // The game is over
+                                            gameOver = true
+                                            
+                                            // Save the winner's name
+                                            winner = player.name
+                                        }
+                                    }
+                                    
+                                    // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
+                                    
+                                    if let combattant = team[choiceAsInt-1] as? Combattant{
+                                        
+                                        combattant.strength = Box.Weapons.Dagger.rawValue
+                                        
+                                    }
+                                    
+                                    if let colosse = team[choiceAsInt-1] as? Colosse{
+                                        
+                                        colosse.strength = Box.Weapons.noWeapon.rawValue
+                                        
+                                    }
+                                    
+                                    if let nain = team[choiceAsInt-1] as? Nain{
+                                        
+                                        nain.strength = Box.Weapons.Axe.rawValue
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                index+=1
+                
+                // Inform on teams'state
+                teamsState()
+                
+                // Count the rounds' number
+                rounds+=1
+            }
+        }
+        print("\n******************************************************************\n")
+        print("Partie finie ! Le joueur \(winner) a gagné. Nombre de tours effectués : \(rounds)")
+        print("\n******************************************************************\n")
+    }
+    
+    // Select a weapon at random in box
+    func weapon(atRandom number: Int) -> Box.Weapons {
+        
+        // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
+        switch number {
+            
+        case 1:
+            return .Sword
+        case 2:
+            return .Lance
+        case 3:
+            return .Dagger
+        case 4:
+            return .Bow
+        case 5:
+            return .Axe
+        case 6:
+            return .Gun
+        default:
+            return .noWeapon
+            
+        }
+    }
+    
+    // Select a 'carePower' at random in box
+    func carePower(atRandom number: Int) -> Box.CarePower {
+        
+        // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
+        switch number {
+            
+        case 1:
+            return .strong
+        case 2:
+            return .veryStrong
+        default:
+            return .superStrong
+            
+        }
     }
     
 }
