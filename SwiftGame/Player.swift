@@ -38,37 +38,6 @@ class Player {
         }
     }
     
-    func createTeam(){
-        
-        var round = 1
-        
-        // Create characters while the team count is < 3
-        while team.count < 3 {
-            
-            
-            switch round{
-            case 1:
-                print("\nChoisissez le premier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
-            case 2:
-                print("\nChoisissez le deuxieme personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
-            case 3:
-                print("\nChoisissez le dernier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
-            default:
-                print("round > 3")
-            }
-            
-            let result = createCharacter()
-            
-            // If character created, then go to the next creation. Else, create again the same character...
-            if result {
-                round+=1
-            }
-        }
-        
-        // Confirm operation success
-        print("\n\(name), votre équipe est constituée !")
-    }
-    
     // Edit a Character, return boolean value depending success of operation
     func createCharacter() -> Bool{
         
@@ -143,4 +112,95 @@ class Player {
         return false
     }
     
+    func createTeam(){
+        
+        var round = 1
+        
+        // Create characters while the team count is < 3
+        while team.count < 3 {
+            
+            
+            switch round{
+            case 1:
+                print("\nChoisissez le premier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
+            case 2:
+                print("\nChoisissez le deuxieme personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
+            case 3:
+                print("\nChoisissez le dernier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
+            default:
+                print("round > 3")
+            }
+            
+            let result = createCharacter()
+            
+            // If character created, then go to the next creation. Else, create again the same character...
+            if result {
+                round+=1
+            }
+        }
+        
+        // Confirm operation success
+        print("\n\(name), votre équipe est constituée !")
+    }
+    
+    // Function for Bonus ! Create players'teams automatically
+    func createTeamAuto(){
+        
+        while team.count < 3 {
+            
+            // See function's details below...
+            createCharacterAuto()
+            
+        }
+        
+        // Confirmation
+        print("\n\(name), votre équipe est constituée !")
+    }
+    
+    // Create character automatically
+    func createCharacterAuto() {
+        
+        // Define character's names in an array
+        let names = ["Hulk", "Iron man", "Gandalf", "Oz", "Tyrion", "Captain America", "Conan", "Gimli"]
+        
+        // Define Integer at random to select in the 'names' array (over)
+        var randomIntForNames = Int(arc4random_uniform(UInt32(names.count)))
+        
+        // Define Integer >= 1 & < 5 to switch character type below
+        let randomIntForTypes = Int(arc4random_uniform(UInt32(5)))
+        
+        // Check that the name defined at random doesn't exist. Else, select another name at random in 'names' array
+        while game.characterNameExists(name: names[randomIntForNames]){
+            randomIntForNames = Int(arc4random_uniform(UInt32(names.count)))
+        }
+        
+        // Create character depending the character type selected at random...
+        switch randomIntForTypes{
+        case 1:
+            let combattant = Combattant(name: names[randomIntForNames])
+            add(character: combattant)
+            game.add(character: combattant)
+            print("\n\(names[randomIntForNames]), le Combattant, a bien été ajouté à votre équipe.")
+        case 2:
+            let mage = Mage(name: names[randomIntForNames])
+            add(character: mage)
+            game.add(character: mage)
+            print("\n\(names[randomIntForNames]), le Mage, a bien été ajouté à votre équipe.")
+        case 3:
+            let colosse = Colosse(name: names[randomIntForNames])
+            add(character: colosse)
+            game.add(character: colosse)
+            print("\n\(names[randomIntForNames]), le Colosse, a bien été ajouté à votre équipe.")
+        case 4:
+            let nain = Nain(name: names[randomIntForNames])
+            add(character: nain)
+            game.add(character: nain)
+            print("\n\(names[randomIntForNames]), le Nain, a bien été ajouté à votre équipe.")
+        default:
+            print("\nLe personnage que vous avez choisi n'existe pas. Choisissez un chiffre compris entre 1 et 4")
+        }
+        
+    }
+    
 }
+

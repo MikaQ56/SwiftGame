@@ -9,7 +9,7 @@
 import Foundation
 
 // Create a 'Game' class to manage the game (parameters, rules, running...)
-class Game {
+class Game{
     
     // Players in the game...
     var players = [Player]()
@@ -32,11 +32,35 @@ class Game {
     // Winner's name
     var winner = String()
     
+    // If players want to create teams automatically
+    var modeAuto = false
+    
+    // Game running
     func run(){
         
         description()
         
         editPlayers()
+        
+        start()
+    }
+    
+    // Function for developpement mode...
+    func editPlayersAuto(){
+        
+        let player1 = Player(name: "Mickael")
+        let player2 = Player(name: "Nicolas")
+        
+        add(player: player1)
+        add(player: player2)
+        
+        player1.team.append(Combattant(name: "Thor"))
+        player1.team.append(Mage(name: "Oz"))
+        player1.team.append(Colosse(name: "Hulk"))
+        
+        player2.team.append(Combattant(name: "Ryan"))
+        player2.team.append(Mage(name: "Gandalf"))
+        player2.team.append(Nain(name: "Tyrion"))
         
     }
     
@@ -58,6 +82,12 @@ class Game {
         print("Vous voulez en savoir plus ? Commencons par constituer les équipes !\n")
         print("Souhaitez vous que les équipes soit créées automatiquement ou préférez vous le faire vous même ?\n1. Tapez 1 pour le mode Auto\n2. Tapez 2 pour le mode manuel")
         
+        // Option for automatic mode...
+        if let choice = readLine(){
+            if choice == "1" {
+                modeAuto = true
+            }
+        }
     }
     
     // Add player to the game
@@ -104,7 +134,13 @@ class Game {
                 let player = Player(name: playerName)
                 add(player: player)
                 
-                player.createTeam()
+                // Check automatic mode before create teams
+                if modeAuto {
+                    player.createTeamAuto()
+                }
+                else{
+                    player.createTeam()
+                }
                 
             }
             
@@ -344,5 +380,5 @@ class Game {
             
         }
     }
-    
 }
+
