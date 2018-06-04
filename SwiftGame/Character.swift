@@ -41,4 +41,20 @@ class Character {
         
         print("\(name), est un \(type), il a une force de \(strength) et \(health) points de vie\n")
     }
+    
+    // Character's strike
+    func strike(target: Character, player: Player){
+        
+        target.health -= strength
+        print("\n******************************************************************\n")
+        print("\(name) a attaqué \(target.name). Ce dernier a perdu \(strength) points de vie !")
+        print("\n******************************************************************\n")
+        
+        if target.health < 0 {
+            player.delete(characterName: target.name)
+            print("\n******************************************************************\n")
+            print("\(target.name) n'a pas résisté à l'attaque de \(name). Il est mort !")
+            print("\n******************************************************************\n")
+        }
+    }
 }
