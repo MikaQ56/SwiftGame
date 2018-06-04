@@ -22,4 +22,20 @@ class Player {
         self.name = name
     }
     
+    // Add Character player's team
+    func add(character: Character){
+        team.append(character)
+    }
+    
+    // Remove character from player's team
+    func delete(characterName: String){
+        var index = 0
+        for character in team{
+            if character.name == characterName{
+                team.remove(at: index)
+            }
+            index+=1
+        }
+    }
+    
 }
