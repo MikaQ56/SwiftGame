@@ -8,5 +8,9 @@
 
 import Foundation
 
-print("Hello, World!")
+// Initialize game
+let game = Game()
 
+
+// Run the game
+game.run()

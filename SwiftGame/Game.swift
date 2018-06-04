@@ -23,6 +23,14 @@ class Game {
     // List of character types
     var characterTypes = ["Le Combattant", "Le Mage", "Le Colosse", "Le Nain"]
     
+    func run(){
+        
+        description()
+        
+        editPlayers()
+        
+    }
+    
     // Introduction of the game at the beginning
     func description(){
         
