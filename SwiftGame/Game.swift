@@ -108,4 +108,35 @@ class Game {
         print("\n******************************************************************\n")
     }
     
+    // Resume the state of players'teams during the game
+    func teamsState(){
+        
+        print("\n------------------------------------------------------------------\n")
+        
+        // Loop in players' teams to check team's state
+        for player in players {
+            print("\n*** Etat des troupes de l'équipe de \(player.name) ***\n")
+            let teamPlayer = player.team
+            
+            // Inform when the team is empty
+            if teamPlayer.count == 0{
+                print("-- Le joueur \(player.name) n'a plus de personnages. Ils sont tous morts !")
+            }
+                // Give details on team's state
+            else{
+                var index = 0
+                for character in teamPlayer {
+                    index+=1
+                    if let mage = character as? Mage{
+                        print("\(index). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength). Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
+                    }
+                    else{
+                        print("\(index). \(character.name), le \(character.type), a \(character.health) points de vie et une force de \(character.strength)\n")
+                    }
+                }
+            }
+        }
+        print("\n------------------------------------------------------------------\n")
+    }
+    
 }
