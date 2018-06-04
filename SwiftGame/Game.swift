@@ -41,7 +41,46 @@ class Game {
         print("Vous voulez en savoir plus ? Commencons par constituer les équipes !\n")
         print("Souhaitez vous que les équipes soit créées automatiquement ou préférez vous le faire vous même ?\n1. Tapez 1 pour le mode Auto\n2. Tapez 2 pour le mode manuel")
         
+    }
+    
+    // Add player to the game
+    func add(player: Player){
         
+        players.append(player)
+    }
+    
+    // Edit players : players' name & teams...
+    func editPlayers(){
+        
+        // Edit players while players' number max isn't reach
+        var index = 0
+        while players.count < playersMax{
+            
+            // Asking player's name...
+            print("\nJoueur \(index+1), quel est votre Nom ?")
+            if var playerName = readLine(){
+                
+                // Check that the name is valid..
+                while playerName == ""{
+                    print("\nVous devez entrer un nom. Saisissez à nouveau...\n")
+                    playerName = readLine()!
+                }
+                
+                // If name valid, then Player class is initialized and the player added to the game
+                let player = Player(name: playerName)
+                add(player: player)
+                
+                player.createTeam()
+                
+            }
+            
+            index+=1
+        }
+        
+        // Confirm creation of the teams
+        print("\n******************************************************************\n")
+        print("Les joueurs et leurs équipes sont prêts. Passons au combat !")
+        print("\n******************************************************************\n")
     }
     
 }
