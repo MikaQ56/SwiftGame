@@ -215,7 +215,7 @@ class Game{
                     else{
                         
                         // Save a number >= 1 & < 8 at random.
-                        var random = Int(arc4random_uniform(UInt32(8)))
+                        var random = Int(arc4random_uniform(UInt32(7)))
                         
                         // Step 2 : Optional...
                         // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
@@ -224,7 +224,7 @@ class Game{
                             
                             //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
                             if let mage = team[choiceAsInt-1] as? Mage{
-                                if random > 4 {
+                                if random > 3 {
                                     random -= 4
                                 }
                                 

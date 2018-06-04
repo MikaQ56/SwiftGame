@@ -167,7 +167,7 @@ class Player {
         var randomIntForNames = Int(arc4random_uniform(UInt32(names.count)))
         
         // Define Integer >= 1 & < 5 to switch character type below
-        let randomIntForTypes = Int(arc4random_uniform(UInt32(5)))
+        let randomIntForTypes = Int(arc4random_uniform(UInt32(4)))
         
         // Check that the name defined at random doesn't exist. Else, select another name at random in 'names' array
         while game.characterNameExists(name: names[randomIntForNames]){
