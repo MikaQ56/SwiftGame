@@ -18,4 +18,11 @@ class Mage: Character {
         health = helmet["Wooden"]!
         type = "Mage"
     }
+    
+    func care(target: Character){
+        target.health += care
+        print("\n******************************************************************\n")
+        print("Le Mage a soigné \(target.name). Ce dernier a récupéré \(care) points de vie !")
+        print("\n******************************************************************\n")
+    }
 }
