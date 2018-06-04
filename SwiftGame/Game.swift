@@ -67,7 +67,7 @@ class Game{
     // Introduction of the game at the beginning
     func description(){
         
-        print("Bienvenue dans PlayGame ! Un jeu dans lequel deux équipes vont s'affronter dans un combat à mort. Entrez dans l'arene...\n")
+        print("Bienvenue dans SwiftGame ! Un jeu dans lequel deux équipes vont s'affronter dans un combat à mort. Entrez dans l'arene...\n")
         print("Chaque joueur devra constituer une équipe avec 3 personnages...\n")
         print("Voici les personnages existants, et que vous pourrez choisir avec leur numéro :\n")
         
