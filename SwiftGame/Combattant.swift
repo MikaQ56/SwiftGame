@@ -13,7 +13,7 @@ class Combattant: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = 10
+        strength = Box.Weapons.Dagger.rawValue
         health = helmet["Iron"]!
         type = "Combattant"
     }

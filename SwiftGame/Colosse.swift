@@ -13,7 +13,7 @@ class Colosse: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = 0
+        strength = Box.Weapons.noWeapon.rawValue
         health = helmet["Diamond"]!
         type = "Colosse"
     }
