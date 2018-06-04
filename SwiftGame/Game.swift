@@ -49,6 +49,12 @@ class Game {
         players.append(player)
     }
     
+    // Add character to the game
+    func add(character: Character){
+        
+        characters.append(character)
+    }
+    
     // Is there an other character with the same name ?
     func characterNameExists(name: String) -> Bool{
         
