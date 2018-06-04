@@ -49,6 +49,17 @@ class Game {
         players.append(player)
     }
     
+    // Is there an other character with the same name ?
+    func characterNameExists(name: String) -> Bool{
+        
+        for character in characters{
+            if character.name == name {
+                return true
+            }
+        }
+        return false
+    }
+    
     // Edit players : players' name & teams...
     func editPlayers(){
         
