@@ -214,36 +214,8 @@ class Game{
                         // If first choice is ok, then provide a random step...
                     else{
                         
-                        // Save a number >= 1 & < 8 at random.
-                        var random = Int(arc4random_uniform(UInt32(7)))
-                        
-                        // Step 2 : Optional...
-                        // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
-                        // See emum Box in Box.swift file
-                        if random == index {
-                            
-                            //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
-                            if let mage = team[choiceAsInt-1] as? Mage{
-                                if random > 3 {
-                                    random -= 4
-                                }
-                                
-                                // See the 'carePower' function details below
-                                let carePowerAtRandom = carePower(atRandom: random)
-                                
-                                // Mage's power is increased
-                                mage.care = carePowerAtRandom.rawValue
-                                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom.rawValue) ")
-                            }
-                                // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
-                            else{
-                                
-                                // See the 'carePower' function details below
-                                let weaponAtRandom = weapon(atRandom: random)
-                                team[choiceAsInt-1].strength = weaponAtRandom.rawValue
-                                print("Vous avez une nouvelle arme ! Qui vous donne une force de \(weaponAtRandom.rawValue) ")
-                            }
-                        }
+                        // Step 2 : Run at random... See runStep2AtRandom function details below
+                        runStep2AtRandom(choice: choiceAsInt, team: team, index: index)
                         
                         // Step 3 : Select the opponent character...
                         print("\(player.name), choisissez une cible dans l'équipe adverse ou un personnage de votre équipe si vous venez de sélectionner votre Mage :")
@@ -339,6 +311,40 @@ class Game{
         print("\n******************************************************************\n")
         print("Partie finie ! Le joueur \(winner) a gagné. Nombre de tours effectués : \(rounds)")
         print("\n******************************************************************\n")
+    }
+    
+    func runStep2AtRandom(choice: Int, team: [Character], index: Int){
+        
+        // Save a number >= 1 & < 8 at random.
+        var random = Int(arc4random_uniform(7))
+        
+        // Step 2 : Optional...
+        // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
+        // See emum Box in Box.swift file
+        if random == index {
+            
+            //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
+            if let mage = team[choice-1] as? Mage{
+                if random > 3 {
+                    random -= 4
+                }
+                
+                // See the 'carePower' function details below
+                let carePowerAtRandom = carePower(atRandom: random)
+                
+                // Mage's power is increased
+                mage.care = carePowerAtRandom.rawValue
+                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom.rawValue) ")
+            }
+                // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
+            else{
+                
+                // See the 'carePower' function details below
+                let weaponAtRandom = weapon(atRandom: random)
+                team[choice-1].strength = weaponAtRandom.rawValue
+                print("Vous avez une nouvelle arme ! Qui vous donne une force de \(weaponAtRandom.rawValue) ")
+            }
+        }
     }
     
     // Select a weapon at random in box
