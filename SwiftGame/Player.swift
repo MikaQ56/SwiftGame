@@ -43,6 +43,8 @@ class Player {
         
         if let choice = readLine(){
             
+            let choiceAsInt = game.check(choice: choice, choiceMax: 4)
+            
             print("\nQuel sera son nom ?")
             
             if var characterName = readLine(){
@@ -60,10 +62,10 @@ class Player {
                 }
                 
                 // character type depends on the player's choice...
-                switch choice{
+                switch choiceAsInt{
                     
                 // Create character with Combattant type
-                case "1":
+                case 1:
                     
                     // Initialize Combattant class
                     let combattant = Combattant(name: characterName)
@@ -79,7 +81,7 @@ class Player {
                     return true
                     
                 // Create character with Mage type
-                case "2":
+                case 2:
                     let mage = Mage(name: characterName)
                     add(character: mage)
                     game.add(character: mage)
@@ -87,7 +89,7 @@ class Player {
                     return true
                     
                 // Create character with Colosse type
-                case "3":
+                case 3:
                     let colosse = Colosse(name: characterName)
                     add(character: colosse)
                     game.add(character: colosse)
@@ -95,7 +97,7 @@ class Player {
                     return true
                     
                 // Create character with Nain type
-                case "4":
+                case 4:
                     let nain = Nain(name: characterName)
                     add(character: nain)
                     game.add(character: nain)
