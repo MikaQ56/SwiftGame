@@ -178,24 +178,16 @@ class Player {
         switch randomIntForTypes{
         case 1:
             let combattant = Combattant(name: names[randomIntForNames])
-            add(character: combattant)
-            game.add(character: combattant)
-            print("\n\(names[randomIntForNames]), le Combattant, a bien été ajouté à votre équipe.")
+            save(character: combattant)
         case 2:
             let mage = Mage(name: names[randomIntForNames])
-            add(character: mage)
-            game.add(character: mage)
-            print("\n\(names[randomIntForNames]), le Mage, a bien été ajouté à votre équipe.")
+            save(character: mage)
         case 3:
             let colosse = Colosse(name: names[randomIntForNames])
-            add(character: colosse)
-            game.add(character: colosse)
-            print("\n\(names[randomIntForNames]), le Colosse, a bien été ajouté à votre équipe.")
+            save(character: colosse)
         case 4:
             let nain = Nain(name: names[randomIntForNames])
-            add(character: nain)
-            game.add(character: nain)
-            print("\n\(names[randomIntForNames]), le Nain, a bien été ajouté à votre équipe.")
+            save(character: nain)
         default:
             print("\nLe personnage que vous avez choisi n'existe pas. Choisissez un chiffre compris entre 1 et 4")
         }
