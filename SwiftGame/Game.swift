@@ -84,7 +84,8 @@ class Game{
         
         // Option for automatic mode...
         if let choice = readLine(){
-            if choice == "1" {
+            let choiceAsInt = check(choice: choice, choiceMax: 2)
+            if choiceAsInt == 1 {
                 modeAuto = true
             }
         }
@@ -205,95 +206,86 @@ class Game{
                 // Step 1 : Select one character in the player's team
                 print("\(player.name), choisissez un personnage de votre équipe :")
                 if let choice = readLine(){
-                    let choiceAsInt = Int(choice)!
                     
-                    // Check the number selected by player to choose a character in team
-                    if choiceAsInt < 1 || choiceAsInt > 3{
-                        print("Vous devez choisir un chiffre entre 1 et 3")
-                    }
-                        // If first choice is ok, then provide a random step...
-                    else{
+                    let choiceAsInt = check(choice: choice, choiceMax: team.count)
+                    
+                    // If first choice is ok, then provide a random step...
+                    // Step 2 : Run at random... See runStep2AtRandom function details below
+                    runStep2AtRandom(choice: choiceAsInt, team: team, index: index)
                         
-                        // Step 2 : Run at random... See runStep2AtRandom function details below
-                        runStep2AtRandom(choice: choiceAsInt, team: team, index: index)
+                    // Step 3 : Select the opponent character...
+                    print("\(player.name), choisissez une cible dans l'équipe adverse ou un personnage de votre équipe si vous venez de sélectionner un Mage :")
                         
-                        // Step 3 : Select the opponent character...
-                        print("\(player.name), choisissez une cible dans l'équipe adverse ou un personnage de votre équipe si vous venez de sélectionner votre Mage :")
-                        
-                        // Check the number selected to choose the character
-                        if let targetIndex = readLine(){
-                            let targetAsInt = Int(targetIndex)!
-                            if targetAsInt < 1 || choiceAsInt > 3{
-                                print("Vous devez choisir un chiffre entre 1 et 3")
+                    // Check the number selected to choose the character
+                    if let targetIndex = readLine(){
+                            
+                        let targetAsInt = check(choice: targetIndex, choiceMax: team.count)
+                                
+                        // Manage interactions between characters : results of strength, health points...
+                            
+                        var target: Character
+                                
+                        // Separate Mage's case
+                        if let mage = team[choiceAsInt-1] as? Mage{
+                                    
+                            mage.care(target: player.team[targetAsInt-1])
+                                    
+                            // Initialized Mage's care points default in case "step 2 optional" (see previously over) has been accomplished...
+                            mage.care = 20
+                        }
+                        else{
+                                    
+                            if index == 0{
+                                        
+                                // Save, implement action... See 'strike' function in 'Player' class for more details
+                                target = players[1].team[targetAsInt-1]
+                                team[choiceAsInt-1].strike(target: target, player: players[1])
+                                        
+                                // All player's characters are dead
+                                if players[1].team.count == 0{
+                                            
+                                    // The game is over
+                                    gameOver = true
+                                            
+                                    // Save the winner's name
+                                    winner = player.name
+                                }
                             }
-                                
-                                // Manage interactions between characters : results of strength, health points...
                             else{
-                                var target: Character
-                                
-                                // Separate Mage's case
-                                if let mage = team[choiceAsInt-1] as? Mage{
-                                    
-                                    mage.care(target: player.team[targetAsInt-1])
-                                    
-                                    // Initialized Mage's care points default in case "step 2 optional" (see previously over) has been accomplished...
-                                    mage.care = 20
+                                        
+                                // Save, implement action... See 'strike' function in 'Player' class for more details
+                                target = players[0].team[targetAsInt-1]
+                                team[choiceAsInt-1].strike(target: target, player: players[0])
+                                        
+                                // All player's characters are dead
+                                if players[0].team.count == 0{
+                                            
+                                    // The game is over
+                                    gameOver = true
+                                            
+                                    // Save the winner's name
+                                    winner = player.name
                                 }
-                                else{
+                            }
                                     
-                                    if index == 0{
-                                        
-                                        // Save, implement action... See 'strike' function in 'Player' class for more details
-                                        target = players[1].team[targetAsInt-1]
-                                        team[choiceAsInt-1].strike(target: target, player: players[1])
-                                        
-                                        // All player's characters are dead
-                                        if players[1].team.count == 0{
-                                            
-                                            // The game is over
-                                            gameOver = true
-                                            
-                                            // Save the winner's name
-                                            winner = player.name
-                                        }
-                                    }
-                                    else{
-                                        
-                                        // Save, implement action... See 'strike' function in 'Player' class for more details
-                                        target = players[0].team[targetAsInt-1]
-                                        team[choiceAsInt-1].strike(target: target, player: players[0])
-                                        
-                                        // All player's characters are dead
-                                        if players[0].team.count == 0{
-                                            
-                                            // The game is over
-                                            gameOver = true
-                                            
-                                            // Save the winner's name
-                                            winner = player.name
-                                        }
-                                    }
+                            // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
                                     
-                                    // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
+                            if let combattant = team[choiceAsInt-1] as? Combattant{
+                                        
+                                combattant.strength = Box.Weapons.Dagger.rawValue
+                                        
+                            }
                                     
-                                    if let combattant = team[choiceAsInt-1] as? Combattant{
+                            if let colosse = team[choiceAsInt-1] as? Colosse{
                                         
-                                        combattant.strength = Box.Weapons.Dagger.rawValue
+                                colosse.strength = Box.Weapons.noWeapon.rawValue
                                         
-                                    }
+                            }
                                     
-                                    if let colosse = team[choiceAsInt-1] as? Colosse{
+                            if let nain = team[choiceAsInt-1] as? Nain{
                                         
-                                        colosse.strength = Box.Weapons.noWeapon.rawValue
+                                nain.strength = Box.Weapons.Axe.rawValue
                                         
-                                    }
-                                    
-                                    if let nain = team[choiceAsInt-1] as? Nain{
-                                        
-                                        nain.strength = Box.Weapons.Axe.rawValue
-                                        
-                                    }
-                                }
                             }
                         }
                     }
@@ -311,6 +303,30 @@ class Game{
         print("\n******************************************************************\n")
         print("Partie finie ! Le joueur \(winner) a gagné. Nombre de tours effectués : \(rounds)")
         print("\n******************************************************************\n")
+    }
+    
+    func check(choice: String, choiceMax: Int) -> Int {
+        
+        if var choiceAsInt = Int(choice){
+            
+            // Check the number selected by player to choose a character in team
+            while choiceAsInt < 1 || choiceAsInt > choiceMax{
+                print("Vous devez choisir un chiffre entre 1 et \(choiceMax)")
+                let newChoice = readLine()!
+                if let newChoice = Int(newChoice){
+                    choiceAsInt = newChoice
+                }
+            }
+            
+            return choiceAsInt
+        }
+        else{
+            
+            print("Vous devez saisir un chiffre !")
+            let newChoice = readLine()!
+            let choiceAsInt = check(choice: newChoice, choiceMax: choiceMax)
+            return choiceAsInt
+        }
     }
     
     func runStep2AtRandom(choice: Int, team: [Character], index: Int){
