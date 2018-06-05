@@ -69,39 +69,25 @@ class Player {
                     
                     // Initialize Combattant class
                     let combattant = Combattant(name: characterName)
-                    
-                    // Add character on player's team
-                    add(character: combattant)
-                    
-                    // Add character on Game
-                    game.add(character: combattant)
-                    
-                    // Confirm success operation
-                    print("\n\(characterName), le Combattant, a bien été ajouté à votre équipe.")
+                    save(character: combattant)
                     return true
                     
                 // Create character with Mage type
                 case 2:
                     let mage = Mage(name: characterName)
-                    add(character: mage)
-                    game.add(character: mage)
-                    print("\n\(characterName), le Mage, a bien été ajouté à votre équipe.")
+                    save(character: mage)
                     return true
                     
                 // Create character with Colosse type
                 case 3:
                     let colosse = Colosse(name: characterName)
-                    add(character: colosse)
-                    game.add(character: colosse)
-                    print("\n\(characterName), le Colosse, a bien été ajouté à votre équipe.")
+                    save(character: colosse)
                     return true
                     
                 // Create character with Nain type
                 case 4:
                     let nain = Nain(name: characterName)
-                    add(character: nain)
-                    game.add(character: nain)
-                    print("\n\(characterName), le Nain, a bien été ajouté à votre équipe.")
+                    save(character: nain)
                     return true
                     
                 // Error in the choice
@@ -112,6 +98,18 @@ class Player {
             }
         }
         return false
+    }
+    
+    func save(character: Character){
+        
+         // Add character on player's team
+        add(character: character)
+        
+        // Add character on Game
+        game.add(character: character)
+        
+        // Confirm success operation
+        print("\n\(character.name), le \(character.type), a bien été ajouté à votre équipe.")
     }
     
     func createTeam(){
