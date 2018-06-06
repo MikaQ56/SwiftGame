@@ -72,10 +72,8 @@ class Game{
         print("Voici les personnages existants, et que vous pourrez choisir avec leur numéro :\n")
         
         // List of character types
-        var index = 0
-        for characterType in characterTypes {
-            index+=1
-            print("\(index). "+characterType+"\n")
+        for (index, characterType) in characterTypes.enumerated() {
+            print("\(index+1). "+characterType+"\n")
         }
         
         print("Chaque personnage a des caractéristiques différentes...\n")
@@ -165,19 +163,19 @@ class Game{
             let teamPlayer = player.team
             
             // Inform when the team is empty
-            if teamPlayer.count == 0{
+            if teamPlayer.isEmpty{
                 print("-- Le joueur \(player.name) n'a plus de personnages. Ils sont tous morts !")
             }
                 // Give details on team's state
             else{
-                var index = 0
-                for character in teamPlayer {
-                    index+=1
+                
+                for (index, character) in teamPlayer.enumerated() {
+                    
                     if let mage = character as? Mage{
-                        print("\(index). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength). Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
+                        print("\(index+1). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength). Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
                     }
                     else{
-                        print("\(index). \(character.name), le \(character.type), a \(character.health) points de vie et une force de \(character.strength)\n")
+                        print("\(index+1). \(character.name), le \(character.type), a \(character.health) points de vie et une force de \(character.strength)\n")
                     }
                 }
             }
@@ -198,8 +196,7 @@ class Game{
         // The game will be finished when the variable 'gameOver' is true
         while !gameOver{
             
-            var index = 0
-            for player in players {
+            for (index, player) in players.enumerated() {
                 
                 var team = player.team
                 
@@ -230,7 +227,7 @@ class Game{
                                     
                             mage.care(target: player.team[targetAsInt-1])
                                     
-                            // Initialized Mage's care points default in case "step 2 optional" (see previously over) has been accomplished...
+                            // Initialized Mage's care property in case "step 2 optional" (see previously over) has been accomplished...
                             mage.care = 20
                         }
                         else{
@@ -290,8 +287,6 @@ class Game{
                         }
                     }
                 }
-                
-                index+=1
                 
                 // Inform on teams'state
                 teamsState()
