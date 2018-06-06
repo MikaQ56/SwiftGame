@@ -219,8 +219,6 @@ class Game{
                         let targetAsInt = check(choice: targetIndex, choiceMax: team.count)
                                 
                         // Manage interactions between characters : results of strength, health points...
-                            
-                        var target: Character
                                 
                         // Separate Mage's case
                         if let mage = team[choiceAsInt-1] as? Mage{
@@ -231,59 +229,8 @@ class Game{
                             mage.care = 20
                         }
                         else{
-                                    
-                            if index == 0{
-                                        
-                                // Save, implement action... See 'strike' function in 'Player' class for more details
-                                target = players[1].team[targetAsInt-1]
-                                team[choiceAsInt-1].strike(target: target, player: players[1])
-                                        
-                                // All player's characters are dead
-                                if players[1].team.count == 0{
-                                            
-                                    // The game is over
-                                    gameOver = true
-                                            
-                                    // Save the winner's name
-                                    winner = player.name
-                                }
-                            }
-                            else{
-                                        
-                                // Save, implement action... See 'strike' function in 'Player' class for more details
-                                target = players[0].team[targetAsInt-1]
-                                team[choiceAsInt-1].strike(target: target, player: players[0])
-                                        
-                                // All player's characters are dead
-                                if players[0].team.count == 0{
-                                            
-                                    // The game is over
-                                    gameOver = true
-                                            
-                                    // Save the winner's name
-                                    winner = player.name
-                                }
-                            }
-                                    
-                            // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
-                                    
-                            if let combattant = team[choiceAsInt-1] as? Combattant{
-                                        
-                                combattant.strength = Box.Weapon.dagger.rawValue
-                                        
-                            }
-                                    
-                            if let colosse = team[choiceAsInt-1] as? Colosse{
-                                        
-                                colosse.strength = Box.Weapon.noWeapon.rawValue
-                                        
-                            }
-                                    
-                            if let nain = team[choiceAsInt-1] as? Nain{
-                                        
-                                nain.strength = Box.Weapon.axe.rawValue
-                                        
-                            }
+                            
+                            fight(index: index, team: team, targetAsInt: targetAsInt, choiceAsInt: choiceAsInt, player: player)
                         }
                     }
                 }
@@ -298,6 +245,62 @@ class Game{
         print("\n******************************************************************\n")
         print("Partie finie ! Le joueur \(winner) a gagné. Nombre de tours effectués : \(rounds)")
         print("\n******************************************************************\n")
+    }
+    
+    func fight(index: Int, team: [Character], targetAsInt: Int, choiceAsInt: Int, player: Player){
+        
+        var targetCharacter: Character
+        var targetPlayer: Player
+        
+        if index == 0 {
+            
+            targetPlayer = players[index+1]
+        }
+        else{
+            
+            targetPlayer = players[0]
+        }
+        
+            
+        // Save, implement action... See 'strike' function in 'Player' class for more details
+        targetCharacter = targetPlayer.team[targetAsInt-1]
+        team[choiceAsInt-1].strike(target: targetCharacter, player: targetPlayer)
+            
+        // All player's characters are dead
+        if targetPlayer.team.isEmpty{
+                
+            // The game is over
+            gameOver = true
+                
+            // Save the winner's name
+            winner = player.name
+        }
+
+    // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
+        
+        initalizeStrengthProperty(choiceAsInt: choiceAsInt, team: team)
+        
+    }
+    
+    func initalizeStrengthProperty(choiceAsInt: Int, team: [Character]){
+        
+        if let combattant = team[choiceAsInt-1] as? Combattant{
+            
+            combattant.strength = Box.Weapon.dagger.rawValue
+            
+        }
+        
+        if let colosse = team[choiceAsInt-1] as? Colosse{
+            
+            colosse.strength = Box.Weapon.noWeapon.rawValue
+            
+        }
+        
+        if let nain = team[choiceAsInt-1] as? Nain{
+            
+            nain.strength = Box.Weapon.axe.rawValue
+            
+        }
     }
     
     func check(choice: String, choiceMax: Int) -> Int {
