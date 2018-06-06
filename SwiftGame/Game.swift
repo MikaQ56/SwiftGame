@@ -201,7 +201,8 @@ class Game{
                 var team = player.team
                 
                 // Step 1 : Select one character in the player's team
-                print("\(player.name), choisissez un personnage de votre équipe :")
+                print("A toi de jouer \(player.name) !\n")
+                print("Choisissez un personnage de votre équipe :\n")
                 if let choice = readLine(){
                     
                     let choiceAsInt = check(choice: choice, choiceMax: team.count)
@@ -211,7 +212,7 @@ class Game{
                     runStep2AtRandom(choice: choiceAsInt, team: team, index: index)
                         
                     // Step 3 : Select the opponent character...
-                    print("\(player.name), choisissez une cible dans l'équipe adverse ou un personnage de votre équipe si vous venez de sélectionner un Mage :")
+                    print("Choisissez une cible dans l'équipe adverse..\n... Ou un personnage de votre équipe si vous venez de sélectionner un Mage :\n")
                         
                     // Check the number selected to choose the character
                     if let targetIndex = readLine(){
@@ -242,7 +243,7 @@ class Game{
             }
         }
         print("\n******************************************************************\n")
-        print("Partie finie ! Le joueur \(winner) a gagné. Nombre de tours effectués : \(rounds)")
+        print("Partie finie ! Bravo \(winner), vous avez gagné. Nombre de tours effectués : \(rounds)")
         print("\n******************************************************************\n")
     }
     
@@ -357,7 +358,7 @@ class Game{
                 // See the 'carePower' function details below
                 let weaponAtRandom = weapon(atRandom: random)
                 team[choice-1].strength = weaponAtRandom.rawValue
-                print("Vous avez une nouvelle arme ! Qui vous donne une force de \(weaponAtRandom.rawValue) ")
+                print("Vous avez une nouvelle arme pour ce tour ! Qui vous donne une force de \(weaponAtRandom.rawValue) ")
             }
         }
     }
