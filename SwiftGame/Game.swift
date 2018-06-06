@@ -125,7 +125,10 @@ class Game{
                 
                 // Check that the name is valid..
                 while playerName == ""{
+                    
+                    Style.separatorForFlash()
                     print("\nVous devez entrer un nom. Saisissez à nouveau...\n")
+                    Style.separatorForFlash()
                     playerName = readLine()!
                 }
                 
@@ -147,15 +150,15 @@ class Game{
         }
         
         // Confirm creation of the teams
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
         print("Les joueurs et leurs équipes sont prêts. Passons au combat !")
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
     }
     
     // Resume the state of players'teams during the game
     func teamsState(){
         
-        print("\n------------------------------------------------------------------\n")
+        Style.separatorForTeamState()
         
         // Loop in players' teams to check team's state
         for player in players {
@@ -172,7 +175,7 @@ class Game{
                 for (index, character) in teamPlayer.enumerated() {
                     
                     if let mage = character as? Mage{
-                        print("\(index+1). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength). Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
+                        print("\(index+1). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength).\n   Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
                     }
                     else{
                         print("\(index+1). \(character.name), le \(character.type), a \(character.health) points de vie et une force de \(character.strength)\n")
@@ -180,7 +183,7 @@ class Game{
                 }
             }
         }
-        print("\n------------------------------------------------------------------\n")
+        Style.separatorForTeamState()
     }
     
     // Start the fight !
@@ -189,9 +192,9 @@ class Game{
         // Recall teams' state
         teamsState()
         
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
         print("Il est temps de rentrer dans l'ârene !")
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
         
         // The game will be finished when the variable 'gameOver' is true
         while !gameOver{
@@ -202,7 +205,7 @@ class Game{
                 
                 // Step 1 : Select one character in the player's team
                 print("A toi de jouer \(player.name) !\n")
-                print("Choisissez un personnage de votre équipe :\n")
+                print("Choisis un personnage de ton équipe :\n")
                 if let choice = readLine(){
                     
                     let choiceAsInt = check(choice: choice, choiceMax: team.count)
@@ -212,12 +215,22 @@ class Game{
                     runStep2AtRandom(choice: choiceAsInt, team: team, index: index)
                         
                     // Step 3 : Select the opponent character...
-                    print("Choisissez une cible dans l'équipe adverse..\n... Ou un personnage de votre équipe si vous venez de sélectionner un Mage :\n")
+                    print("Choisis une cible dans l'équipe adverse...\nOu un personnage de ton équipe si tu viens de sélectionner un Mage :\n")
                         
                     // Check the number selected to choose the character
                     if let targetIndex = readLine(){
+                        
+                        var teamPlayer: [Character]
+                        if index == 0{
                             
-                        let targetAsInt = check(choice: targetIndex, choiceMax: team.count)
+                            teamPlayer = players[1].team
+                        }
+                        else{
+                            
+                            teamPlayer = players[0].team
+                        }
+                            
+                        let targetAsInt = check(choice: targetIndex, choiceMax: teamPlayer.count)
                                 
                         // Manage interactions between characters : results of strength, health points...
                         // Separate Mage's case
@@ -242,9 +255,9 @@ class Game{
                 rounds+=1
             }
         }
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
         print("Partie finie ! Bravo \(winner), vous avez gagné. Nombre de tours effectués : \(rounds)")
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
     }
     
     
@@ -269,7 +282,7 @@ class Game{
         team[choiceAsInt-1].strike(target: targetCharacter, player: targetPlayer)
             
         // If all player's characters are dead
-        if targetPlayer.team.isEmpty{
+        if targetPlayer.team.count == 0{
                 
             // The game is over
             gameOver = true
@@ -311,7 +324,11 @@ class Game{
             
             // Check the number selected by player to choose a character in team
             while choiceAsInt < 1 || choiceAsInt > choiceMax{
-                print("Vous devez choisir un chiffre entre 1 et \(choiceMax)")
+                
+                Style.separatorForFlash()
+                print("Vous devez choisir un chiffre entre 1 et \(choiceMax)\n")
+                Style.separatorForFlash()
+                
                 let newChoice = readLine()!
                 if let newChoice = Int(newChoice){
                     choiceAsInt = newChoice
@@ -322,7 +339,10 @@ class Game{
         }
         else{
             
-            print("Vous devez saisir un chiffre !")
+            Style.separatorForFlash()
+            print("Vous devez saisir un chiffre !\n")
+            Style.separatorForFlash()
+            
             let newChoice = readLine()!
             let choiceAsInt = check(choice: newChoice, choiceMax: choiceMax)
             return choiceAsInt
@@ -350,7 +370,9 @@ class Game{
                 
                 // Mage's power is increased
                 mage.care = carePowerAtRandom.rawValue
-                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom.rawValue) ")
+                Style.separatorForFlash()
+                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom.rawValue) \n")
+                Style.separatorForFlash()
             }
                 // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
             else{
@@ -358,7 +380,9 @@ class Game{
                 // See the 'carePower' function details below
                 let weaponAtRandom = weapon(atRandom: random)
                 team[choice-1].strength = weaponAtRandom.rawValue
-                print("Vous avez une nouvelle arme pour ce tour ! Qui vous donne une force de \(weaponAtRandom.rawValue) ")
+                Style.separatorForFlash()
+                print("Tu as une nouvelle arme pour ce tour ! Qui te donne une force de \(weaponAtRandom.rawValue)")
+                Style.separatorForFlash()
             }
         }
     }

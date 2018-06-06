@@ -51,13 +51,19 @@ class Player {
                 
                 // Check character'name typed by player
                 while characterName == "" {
-                    print("\nVous devez donner un nom à votre personnage !")
+                    
+                    Style.separatorForFlash()
+                    print("\nVous devez donner un nom à votre personnage ! Entrez un nom :")
+                    Style.separatorForFlash()
                     characterName = readLine()!
                 }
                 
                 // Is there already character with the same name ?
                 while game.characterNameExists(name: characterName){
+                    
+                    Style.separatorForFlash()
                     print("\nCe nom existe déjà dans la partie. Choisissez un autre nom :")
+                    Style.separatorForFlash()
                     characterName = readLine()!
                 }
                 
@@ -140,7 +146,9 @@ class Player {
         }
         
         // Confirm operation success
+        Style.separatorForFlash()
         print("\n\(name), votre équipe est constituée !")
+        Style.separatorForFlash()
     }
     
     // Function for Bonus ! Create players'teams automatically
@@ -154,7 +162,9 @@ class Player {
         }
         
         // Confirmation
-        print("\n\(name), votre équipe est constituée !")
+        Style.separatorForFlash()
+        print("\(name), votre équipe est constituée !")
+        Style.separatorForFlash()
     }
     
     // Create character automatically

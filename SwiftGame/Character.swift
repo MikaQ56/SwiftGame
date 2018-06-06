@@ -46,15 +46,15 @@ class Character {
     func strike(target: Character, player: Player){
         
         target.health -= strength
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
         print("\(name) a attaqué \(target.name). Ce dernier a perdu \(strength) points de vie !")
-        print("\n******************************************************************\n")
+        Style.separatorForFlash()
         
         if target.health <= 0 {
             player.delete(characterName: target.name)
-            print("\n******************************************************************\n")
+            Style.separatorForFlash()
             print("\(target.name) n'a pas résisté à l'attaque de \(name). Il est mort !")
-            print("\n******************************************************************\n")
+            Style.separatorForFlash()
         }
     }
 }
