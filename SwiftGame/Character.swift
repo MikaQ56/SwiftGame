@@ -50,7 +50,7 @@ class Character {
         print("\(name) a attaqué \(target.name). Ce dernier a perdu \(strength) points de vie !")
         print("\n******************************************************************\n")
         
-        if target.health < 0 {
+        if target.health <= 0 {
             player.delete(characterName: target.name)
             print("\n******************************************************************\n")
             print("\(target.name) n'a pas résisté à l'attaque de \(name). Il est mort !")

@@ -78,7 +78,7 @@ class Game{
         
         print("Chaque personnage a des caractéristiques différentes...\n")
         print("Vous voulez en savoir plus ? Commencons par constituer les équipes !\n")
-        print("Souhaitez vous que les équipes soit créées automatiquement ou préférez vous le faire vous même ?\n1. Tapez 1 pour le mode Auto\n2. Tapez 2 pour le mode manuel")
+        print("Souhaitez vous que les équipes soit créées automatiquement ou préférez vous le faire vous même ?\n\n1. Tapez 1 pour le mode Auto\n\n2. Tapez 2 pour le mode manuel\n")
         
         // Option for automatic mode...
         if let choice = readLine(){
@@ -219,7 +219,6 @@ class Game{
                         let targetAsInt = check(choice: targetIndex, choiceMax: team.count)
                                 
                         // Manage interactions between characters : results of strength, health points...
-                                
                         // Separate Mage's case
                         if let mage = team[choiceAsInt-1] as? Mage{
                                     
@@ -247,11 +246,14 @@ class Game{
         print("\n******************************************************************\n")
     }
     
+    
+    // Manage fight between Player's characters
     func fight(index: Int, team: [Character], targetAsInt: Int, choiceAsInt: Int, player: Player){
         
         var targetCharacter: Character
         var targetPlayer: Player
         
+        // The target Player depends of loop's index
         if index == 0 {
             
             targetPlayer = players[index+1]
@@ -261,12 +263,11 @@ class Game{
             targetPlayer = players[0]
         }
         
-            
         // Save, implement action... See 'strike' function in 'Player' class for more details
         targetCharacter = targetPlayer.team[targetAsInt-1]
         team[choiceAsInt-1].strike(target: targetCharacter, player: targetPlayer)
             
-        // All player's characters are dead
+        // If all player's characters are dead
         if targetPlayer.team.isEmpty{
                 
             // The game is over
@@ -329,8 +330,8 @@ class Game{
     
     func runStep2AtRandom(choice: Int, team: [Character], index: Int){
         
-        // Save a number >= 1 & < 8 at random.
-        var random = Int(arc4random_uniform(7))
+        // Save a number >= 0 & < 6 at random.
+        var random = Int(arc4random_uniform(6))
         
         // Step 2 : Optional...
         // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
@@ -339,8 +340,8 @@ class Game{
             
             //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
             if let mage = team[choice-1] as? Mage{
-                if random > 3 {
-                    random -= 4
+                if random > 2 {
+                    random -= 3
                 }
                 
                 // See the 'carePower' function details below
@@ -367,17 +368,17 @@ class Game{
         // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
         switch number {
             
-        case 1:
+        case 0:
             return .sword
-        case 2:
+        case 1:
             return .lance
-        case 3:
+        case 2:
             return .dagger
-        case 4:
+        case 3:
             return .bow
-        case 5:
+        case 4:
             return .axe
-        case 6:
+        case 5:
             return .gun
         default:
             return .noWeapon
@@ -391,9 +392,9 @@ class Game{
         // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
         switch number {
             
-        case 1:
+        case 0:
             return .strong
-        case 2:
+        case 1:
             return .veryStrong
         default:
             return .superStrong

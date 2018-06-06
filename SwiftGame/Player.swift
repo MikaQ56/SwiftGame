@@ -166,7 +166,7 @@ class Player {
         // Define Integer at random to select in the 'names' array (over)
         var randomIntForNames = Int(arc4random_uniform(UInt32(names.count)))
         
-        // Define Integer >= 1 & < 5 to switch character type below
+        // Define Integer >= 0 & < 4 to switch character type below
         let randomIntForTypes = Int(arc4random_uniform(UInt32(4)))
         
         // Check that the name defined at random doesn't exist. Else, select another name at random in 'names' array
@@ -176,20 +176,20 @@ class Player {
         
         // Create character depending the character type selected at random...
         switch randomIntForTypes{
-        case 1:
+        case 0:
             let combattant = Combattant(name: names[randomIntForNames])
             save(character: combattant)
-        case 2:
+        case 1:
             let mage = Mage(name: names[randomIntForNames])
             save(character: mage)
-        case 3:
+        case 2:
             let colosse = Colosse(name: names[randomIntForNames])
             save(character: colosse)
-        case 4:
+        case 3:
             let nain = Nain(name: names[randomIntForNames])
             save(character: nain)
         default:
-            print("\nLe personnage que vous avez choisi n'existe pas. Choisissez un chiffre compris entre 1 et 4")
+            print("\nLe personnage que vous avez choisi n'existe pas.")
         }
         
     }
