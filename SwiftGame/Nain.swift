@@ -13,7 +13,7 @@ class Nain: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = Box.Weapons.Axe.rawValue
+        strength = Box.Weapon.axe.rawValue
         health = helmet["Wooden"]!
         type = "Nain"
     }

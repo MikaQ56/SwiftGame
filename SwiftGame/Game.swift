@@ -272,19 +272,19 @@ class Game{
                                     
                             if let combattant = team[choiceAsInt-1] as? Combattant{
                                         
-                                combattant.strength = Box.Weapons.Dagger.rawValue
+                                combattant.strength = Box.Weapon.dagger.rawValue
                                         
                             }
                                     
                             if let colosse = team[choiceAsInt-1] as? Colosse{
                                         
-                                colosse.strength = Box.Weapons.noWeapon.rawValue
+                                colosse.strength = Box.Weapon.noWeapon.rawValue
                                         
                             }
                                     
                             if let nain = team[choiceAsInt-1] as? Nain{
                                         
-                                nain.strength = Box.Weapons.Axe.rawValue
+                                nain.strength = Box.Weapon.axe.rawValue
                                         
                             }
                         }
@@ -364,23 +364,23 @@ class Game{
     }
     
     // Select a weapon at random in box
-    func weapon(atRandom number: Int) -> Box.Weapons {
+    func weapon(atRandom number: Int) -> Box.Weapon {
         
         // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
         switch number {
             
         case 1:
-            return .Sword
+            return .sword
         case 2:
-            return .Lance
+            return .lance
         case 3:
-            return .Dagger
+            return .dagger
         case 4:
-            return .Bow
+            return .bow
         case 5:
-            return .Axe
+            return .axe
         case 6:
-            return .Gun
+            return .gun
         default:
             return .noWeapon
             

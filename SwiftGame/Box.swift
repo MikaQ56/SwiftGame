@@ -12,14 +12,14 @@ import Foundation
 enum Box {
     
     // Enumeration for weapons available in the Box
-    enum Weapons: Int {
+    enum Weapon: Int {
         
-        case Sword = 40
-        case Lance = 30
-        case Dagger = 10
-        case Bow = 20
-        case Axe = 50
-        case Gun = 70
+        case sword = 40
+        case lance = 30
+        case dagger = 10
+        case bow = 20
+        case axe = 50
+        case gun = 70
         case noWeapon = 5
     }
     
