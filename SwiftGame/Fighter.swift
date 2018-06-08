@@ -15,5 +15,7 @@ class Fighter: Character {
         super.init(name: name)
         strength = Box.Weapon.dagger.rawValue
         health = helmet["Iron"]!
+        type = CharacterType.fighter.description()
+        
     }
 }

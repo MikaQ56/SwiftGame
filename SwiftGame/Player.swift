@@ -70,27 +70,27 @@ class Player {
                 // character type depends on the player's choice...
                 switch choiceAsInt{
                     
-                // Create character with Combattant type
+                // Create character with Fighter type
                 case 1:
                     
-                    // Initialize Combattant class
+                    // Initialize Fighter class
                     let fighter = Fighter(name: characterName)
                     save(character: fighter)
                     return true
                     
-                // Create character with Mage type
+                // Create character with Magus type
                 case 2:
                     let magus = Magus(name: characterName)
                     save(character: magus)
                     return true
                     
-                // Create character with Colosse type
+                // Create character with Colossus type
                 case 3:
                     let colossus = Colossus(name: characterName)
                     save(character: colossus)
                     return true
                     
-                // Create character with Nain type
+                // Create character with Dwarf type
                 case 4:
                     let dwarf = Dwarf(name: characterName)
                     save(character: dwarf)

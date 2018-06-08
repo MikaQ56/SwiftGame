@@ -345,7 +345,7 @@ class Game{
         else{
             
             Style.separatorForFlash()
-            print("Vous devez saisir un chiffre !\n")
+            print("Vous devez saisir un chiffre !")
             Style.separatorForFlash()
             
             let newChoice = readLine()!

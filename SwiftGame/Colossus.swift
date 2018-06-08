@@ -15,5 +15,6 @@ class Colossus: Character {
         super.init(name: name)
         strength = Box.Weapon.noWeapon.rawValue
         health = helmet["Diamond"]!
+        type = CharacterType.colossus.description()
     }
 }

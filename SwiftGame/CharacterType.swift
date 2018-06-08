@@ -10,7 +10,7 @@ import Foundation
 
 enum CharacterType: Int{
     
-    case fighter, magus, colossus, dwarf
+    case fighter = 1, magus, colossus, dwarf
     
     func description() -> String{
         
@@ -31,11 +31,31 @@ enum CharacterType: Int{
         }
     }
     
+    func create(choice: Int, characterName: String) -> Character{
+        
+        if let choice = CharacterType(rawValue: choice){
+            
+            switch choice {
+                
+            case .fighter:
+                return Fighter(name: characterName)
+            case .magus:
+                return Magus(name: characterName)
+            case .colossus:
+                return Colossus(name: characterName)
+            case .dwarf:
+                return Dwarf(name: characterName)
+            }
+        }
+        
+        return Fighter(name: characterName)
+    }
+    
     static func allCases() -> [CharacterType]{
         
         var allCases = [CharacterType]()
         
-        for i in 0...10{
+        for i in 1...10{
             
             if let type = CharacterType(rawValue: i){
                 allCases.append(type)
