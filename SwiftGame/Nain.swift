@@ -15,6 +15,5 @@ class Nain: Character {
         super.init(name: name)
         strength = Box.Weapon.axe.rawValue
         health = helmet["Wooden"]!
-        type = "Nain"
     }
 }

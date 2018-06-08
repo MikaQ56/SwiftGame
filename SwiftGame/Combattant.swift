@@ -15,6 +15,5 @@ class Combattant: Character {
         super.init(name: name)
         strength = Box.Weapon.dagger.rawValue
         health = helmet["Iron"]!
-        type = "Combattant"
     }
 }

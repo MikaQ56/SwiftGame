@@ -16,7 +16,6 @@ class Mage: Character {
     override init(name: String){
         super.init(name: name)
         health = helmet["Wooden"]!
-        type = "Mage"
     }
     
     func care(target: Character){
