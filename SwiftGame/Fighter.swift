@@ -8,7 +8,7 @@
 
 import Foundation
 
-// Create character of type Combattant
+// Create character of type Fighter
 class Fighter: Character {
     
     override init(name: String){

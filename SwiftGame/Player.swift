@@ -80,20 +80,20 @@ class Player {
                     
                 // Create character with Mage type
                 case 2:
-                    let mage = Mage(name: characterName)
-                    save(character: mage)
+                    let magus = Magus(name: characterName)
+                    save(character: magus)
                     return true
                     
                 // Create character with Colosse type
                 case 3:
-                    let colosse = Colosse(name: characterName)
-                    save(character: colosse)
+                    let colossus = Colossus(name: characterName)
+                    save(character: colossus)
                     return true
                     
                 // Create character with Nain type
                 case 4:
-                    let nain = Nain(name: characterName)
-                    save(character: nain)
+                    let dwarf = Dwarf(name: characterName)
+                    save(character: dwarf)
                     return true
                     
                 // Error in the choice
@@ -190,14 +190,14 @@ class Player {
             let fighter = Fighter(name: names[randomIntForNames])
             save(character: fighter)
         case 1:
-            let mage = Mage(name: names[randomIntForNames])
-            save(character: mage)
+            let magus = Magus(name: names[randomIntForNames])
+            save(character: magus)
         case 2:
-            let colosse = Colosse(name: names[randomIntForNames])
-            save(character: colosse)
+            let colossus = Colossus(name: names[randomIntForNames])
+            save(character: colossus)
         case 3:
-            let nain = Nain(name: names[randomIntForNames])
-            save(character: nain)
+            let dwarf = Dwarf(name: names[randomIntForNames])
+            save(character: dwarf)
         default:
             print("\nLe personnage que vous avez choisi n'existe pas.")
         }

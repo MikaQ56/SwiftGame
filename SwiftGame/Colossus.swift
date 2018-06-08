@@ -1,5 +1,5 @@
 //
-//  Nain.swift
+//  Colosse.swift
 //  SwiftGame
 //
 //  Created by Mickael on 04/06/2018.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-// Create character of type Nain
-class Nain: Character {
+// Create character of type Colossus
+class Colossus: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = Box.Weapon.axe.rawValue
-        health = helmet["Wooden"]!
+        strength = Box.Weapon.noWeapon.rawValue
+        health = helmet["Diamond"]!
     }
 }

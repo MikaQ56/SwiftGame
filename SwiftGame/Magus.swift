@@ -8,8 +8,8 @@
 
 import Foundation
 
-// Create character of type Mage
-class Mage: Character {
+// Create character of type Magus
+class Magus: Character {
     
     var care = 20
     

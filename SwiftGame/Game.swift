@@ -60,12 +60,12 @@ class Game{
         add(player: player2)
         
         player1.team.append(Fighter(name: "Thor"))
-        player1.team.append(Mage(name: "Oz"))
-        player1.team.append(Colosse(name: "Hulk"))
+        player1.team.append(Magus(name: "Oz"))
+        player1.team.append(Colossus(name: "Hulk"))
         
         player2.team.append(Fighter(name: "Ryan"))
-        player2.team.append(Mage(name: "Gandalf"))
-        player2.team.append(Nain(name: "Tyrion"))
+        player2.team.append(Magus(name: "Gandalf"))
+        player2.team.append(Dwarf(name: "Tyrion"))
         
     }
     
@@ -179,7 +179,7 @@ class Game{
                 
                 for (index, character) in teamPlayer.enumerated() {
                     
-                    if let mage = character as? Mage{
+                    if let mage = character as? Magus{
                         print("\(index+1). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength).\n   Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
                     }
                     else{
@@ -239,12 +239,12 @@ class Game{
                                 
                         // Manage interactions between characters : results of strength, health points...
                         // Separate Mage's case
-                        if let mage = team[choiceAsInt-1] as? Mage{
+                        if let magus = team[choiceAsInt-1] as? Magus{
                                     
-                            mage.care(target: player.team[targetAsInt-1])
+                            magus.care(target: player.team[targetAsInt-1])
                                     
                             // Initialized Mage's care property in case "step 2 optional" (see previously over) has been accomplished...
-                            mage.care = 20
+                            magus.care = 20
                         }
                         else{
                             
@@ -304,21 +304,21 @@ class Game{
     
     func initalizeStrengthProperty(choiceAsInt: Int, team: [Character]){
         
-        if let combattant = team[choiceAsInt-1] as? Fighter{
+        if let fighter = team[choiceAsInt-1] as? Fighter{
             
-            combattant.strength = Box.Weapon.dagger.rawValue
-            
-        }
-        
-        if let colosse = team[choiceAsInt-1] as? Colosse{
-            
-            colosse.strength = Box.Weapon.noWeapon.rawValue
+            fighter.strength = Box.Weapon.dagger.rawValue
             
         }
         
-        if let nain = team[choiceAsInt-1] as? Nain{
+        if let colossus = team[choiceAsInt-1] as? Colossus{
             
-            nain.strength = Box.Weapon.axe.rawValue
+            colossus.strength = Box.Weapon.noWeapon.rawValue
+            
+        }
+        
+        if let dwarf = team[choiceAsInt-1] as? Dwarf{
+            
+            dwarf.strength = Box.Weapon.axe.rawValue
             
         }
     }
@@ -365,7 +365,7 @@ class Game{
         if random == index {
             
             //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
-            if let mage = team[choice-1] as? Mage{
+            if let mage = team[choice-1] as? Magus{
                 if random > 2 {
                     random -= 3
                 }
