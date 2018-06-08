@@ -39,7 +39,7 @@ class Player {
     }
     
     // Edit a Character, return boolean value depending success of operation
-    func createCharacter() -> Bool{
+    func createCharacter(){
         
         if let choice = readLine(){
             
@@ -67,43 +67,10 @@ class Player {
                     characterName = readLine()!
                 }
                 
-                // character type depends on the player's choice...
-                switch choiceAsInt{
-                    
-                // Create character with Fighter type
-                case 1:
-                    
-                    // Initialize Fighter class
-                    let fighter = Fighter(name: characterName)
-                    save(character: fighter)
-                    return true
-                    
-                // Create character with Magus type
-                case 2:
-                    let magus = Magus(name: characterName)
-                    save(character: magus)
-                    return true
-                    
-                // Create character with Colossus type
-                case 3:
-                    let colossus = Colossus(name: characterName)
-                    save(character: colossus)
-                    return true
-                    
-                // Create character with Dwarf type
-                case 4:
-                    let dwarf = Dwarf(name: characterName)
-                    save(character: dwarf)
-                    return true
-                    
-                // Error in the choice
-                default:
-                    print("\nLe personnage que vous avez choisi n'existe pas. Choisissez un chiffre compris entre 1 et 4")
-                    return false
-                }
+                let character = CharacterType.edit(choice: choiceAsInt, characterName: characterName)
+                save(character: character)
             }
         }
-        return false
     }
     
     func save(character: Character){
@@ -137,12 +104,9 @@ class Player {
                 print("round > 3")
             }
             
-            let result = createCharacter()
+            createCharacter()
             
-            // If character created, then go to the next creation. Else, create again the same character...
-            if result {
-                round+=1
-            }
+            round+=1
         }
         
         // Confirm operation success

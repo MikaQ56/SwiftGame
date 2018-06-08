@@ -31,7 +31,7 @@ enum CharacterType: Int{
         }
     }
     
-    func create(choice: Int, characterName: String) -> Character{
+    static func edit(choice: Int, characterName: String) -> Character{
         
         if let choice = CharacterType(rawValue: choice){
             
