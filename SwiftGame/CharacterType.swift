@@ -12,22 +12,22 @@ enum CharacterType: Int{
     
     case fighter, magus, colossus, dwarf
     
-    func description(){
+    func description() -> String{
         
         switch self {
             
         case .fighter:
             
-            print("Le Combattant")
+            return "Le Combattant"
         case .magus:
             
-            print("Le Mage")
+            return "Le Mage"
         case .colossus:
             
-            print("Le Colosse")
+            return "Le Colosse"
         case .dwarf:
             
-            print("Le Nain")
+            return "Le Nain"
         }
     }
     

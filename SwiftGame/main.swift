@@ -8,8 +8,10 @@
 
 import Foundation
 
+let allCases = CharacterType.allCases()
+
 // Initialize game
-let game = Game()
+let game = Game(characterTypes: allCases)
 
 
 // Run the game

@@ -21,7 +21,7 @@ class Game{
     var characters = [Character]()
     
     // List of character types
-    var characterTypes = ["Le Combattant", "Le Mage", "Le Colosse", "Le Nain"]
+    var characterTypes: [CharacterType]
     
     // When the game is over, then the variable 'gameOver' is true
     var gameOver = false
@@ -34,6 +34,11 @@ class Game{
     
     // If players want to create teams automatically
     var modeAuto = false
+    
+    init(characterTypes: [CharacterType] ) {
+        
+        self.characterTypes = characterTypes
+    }
     
     // Game running
     func run(){
@@ -73,7 +78,7 @@ class Game{
         
         // List of character types
         for (index, characterType) in characterTypes.enumerated() {
-            print("\(index+1). "+characterType+"\n")
+            print("\(index+1). "+characterType.description()+"\n")
         }
         
         print("Chaque personnage a des caractéristiques différentes...\n")
