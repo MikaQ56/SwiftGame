@@ -74,8 +74,8 @@ class Player {
                 case 1:
                     
                     // Initialize Combattant class
-                    let combattant = Combattant(name: characterName)
-                    save(character: combattant)
+                    let fighter = Fighter(name: characterName)
+                    save(character: fighter)
                     return true
                     
                 // Create character with Mage type
@@ -187,8 +187,8 @@ class Player {
         // Create character depending the character type selected at random...
         switch randomIntForTypes{
         case 0:
-            let combattant = Combattant(name: names[randomIntForNames])
-            save(character: combattant)
+            let fighter = Fighter(name: names[randomIntForNames])
+            save(character: fighter)
         case 1:
             let mage = Mage(name: names[randomIntForNames])
             save(character: mage)

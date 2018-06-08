@@ -9,7 +9,7 @@
 import Foundation
 
 // Create character of type Combattant
-class Combattant: Character {
+class Fighter: Character {
     
     override init(name: String){
         super.init(name: name)

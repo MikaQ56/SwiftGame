@@ -59,11 +59,11 @@ class Game{
         add(player: player1)
         add(player: player2)
         
-        player1.team.append(Combattant(name: "Thor"))
+        player1.team.append(Fighter(name: "Thor"))
         player1.team.append(Mage(name: "Oz"))
         player1.team.append(Colosse(name: "Hulk"))
         
-        player2.team.append(Combattant(name: "Ryan"))
+        player2.team.append(Fighter(name: "Ryan"))
         player2.team.append(Mage(name: "Gandalf"))
         player2.team.append(Nain(name: "Tyrion"))
         
@@ -304,7 +304,7 @@ class Game{
     
     func initalizeStrengthProperty(choiceAsInt: Int, team: [Character]){
         
-        if let combattant = team[choiceAsInt-1] as? Combattant{
+        if let combattant = team[choiceAsInt-1] as? Fighter{
             
             combattant.strength = Box.Weapon.dagger.rawValue
             
