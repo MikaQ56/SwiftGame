@@ -326,7 +326,7 @@ class Game{
             while choiceAsInt < 1 || choiceAsInt > choiceMax{
                 
                 Style.separatorForFlash()
-                print("Vous devez choisir un chiffre entre 1 et \(choiceMax)\n")
+                print("Vous devez choisir un chiffre entre 1 et \(choiceMax)")
                 Style.separatorForFlash()
                 
                 let newChoice = readLine()!

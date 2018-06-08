@@ -53,7 +53,7 @@ class Player {
                 while characterName == "" {
                     
                     Style.separatorForFlash()
-                    print("\nVous devez donner un nom à votre personnage ! Entrez un nom :")
+                    print("Vous devez donner un nom à votre personnage ! Entrez un nom :")
                     Style.separatorForFlash()
                     characterName = readLine()!
                 }
@@ -62,7 +62,7 @@ class Player {
                 while game.characterNameExists(name: characterName){
                     
                     Style.separatorForFlash()
-                    print("\nCe nom existe déjà dans la partie. Choisissez un autre nom :")
+                    print("Ce nom existe déjà dans la partie. Choisissez un autre nom :")
                     Style.separatorForFlash()
                     characterName = readLine()!
                 }
@@ -147,7 +147,7 @@ class Player {
         
         // Confirm operation success
         Style.separatorForFlash()
-        print("\n\(name), votre équipe est constituée !")
+        print("\(name), votre équipe est constituée !")
         Style.separatorForFlash()
     }
     
