@@ -13,7 +13,7 @@ class Dwarf: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = Box.Weapon.axe.rawValue
+        strength = Box.Weapon.axe.damage()
         health = helmet["Wooden"]!
         type = CharacterType.dwarf.description()
     }

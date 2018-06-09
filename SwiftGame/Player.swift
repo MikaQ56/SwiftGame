@@ -82,7 +82,7 @@ class Player {
         game.add(character: character)
         
         // Confirm success operation
-        print("\n\(character.name), le \(character.type), a bien été ajouté à votre équipe.")
+        print("\n\(character.name), \(character.type), a bien été ajouté à votre équipe.")
     }
     
     func createTeam(){
@@ -101,11 +101,10 @@ class Player {
             case 3:
                 print("\nChoisissez le dernier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
             default:
-                print("round > 3")
+                print("Personnages edités")
             }
             
             createCharacter()
-            
             round+=1
         }
         

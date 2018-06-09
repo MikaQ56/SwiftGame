@@ -11,24 +11,48 @@ import Foundation
 // Create Enumeration for Box & its content
 enum Box {
     
-    // Enumeration for weapons available in the Box
     enum Weapon: Int {
         
-        case sword = 40
-        case lance = 30
-        case dagger = 10
-        case bow = 20
-        case axe = 50
-        case gun = 70
-        case noWeapon = 5
+        case sword, lance, dagger, bow, axe, gun
+        
+        func damage() -> Int{
+            
+            switch self {
+                
+            case .sword:
+                return 40
+            case .lance:
+                return 10
+            case .dagger:
+                return 20
+            case .bow:
+                return 30
+            case .axe:
+                return 50
+            case .gun:
+                return 60
+            }
+        }
     }
     
-    // Enumeration for 'carePower' available in the Box
     enum CarePower: Int {
         
-        case strong = 40
-        case veryStrong = 60
-        case superStrong = 80
+        case strong, veryStrong, superStrong
+        
+        func care() -> Int{
+            
+            switch self {
+                
+            case .strong:
+                return 40
+            case .veryStrong:
+                return 10
+            case .superStrong:
+                return 20
+            }
+        }
     }
-    
 }
+
+
+

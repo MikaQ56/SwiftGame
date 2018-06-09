@@ -306,19 +306,19 @@ class Game{
         
         if let fighter = team[choiceAsInt-1] as? Fighter{
             
-            fighter.strength = Box.Weapon.dagger.rawValue
+            fighter.strength = Box.Weapon.dagger.damage()
             
         }
         
         if let colossus = team[choiceAsInt-1] as? Colossus{
             
-            colossus.strength = Box.Weapon.noWeapon.rawValue
+            colossus.strength = Box.Weapon.lance.damage()
             
         }
         
         if let dwarf = team[choiceAsInt-1] as? Dwarf{
             
-            dwarf.strength = Box.Weapon.axe.rawValue
+            dwarf.strength = Box.Weapon.axe.damage()
             
         }
     }
@@ -374,9 +374,9 @@ class Game{
                 let carePowerAtRandom = carePower(atRandom: random)
                 
                 // Mage's power is increased
-                mage.care = carePowerAtRandom.rawValue
+                mage.care = carePowerAtRandom
                 Style.separatorForFlash()
-                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom.rawValue) \n")
+                print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(carePowerAtRandom) \n")
                 Style.separatorForFlash()
             }
                 // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
@@ -384,51 +384,59 @@ class Game{
                 
                 // See the 'carePower' function details below
                 let weaponAtRandom = weapon(atRandom: random)
-                team[choice-1].strength = weaponAtRandom.rawValue
+                team[choice-1].strength = weaponAtRandom
                 Style.separatorForFlash()
-                print("Tu as une nouvelle arme pour ce tour ! Qui te donne une force de \(weaponAtRandom.rawValue)")
+                print("Tu as une nouvelle arme pour ce tour ! Qui te donne une force de \(weaponAtRandom)")
                 Style.separatorForFlash()
             }
         }
     }
     
     // Select a weapon at random in box
-    func weapon(atRandom number: Int) -> Box.Weapon {
+    func weapon(atRandom number: Int) -> Int{
         
-        // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
-        switch number {
+        if let choice = Box.Weapon(rawValue: number){
             
-        case 0:
-            return .sword
-        case 1:
-            return .lance
-        case 2:
-            return .dagger
-        case 3:
-            return .bow
-        case 4:
-            return .axe
-        case 5:
-            return .gun
-        default:
-            return .noWeapon
+            switch choice {
+                
+            case .sword:
+                return Box.Weapon.sword.damage()
+            case .lance:
+                return Box.Weapon.lance.damage()
+            case .dagger:
+                return Box.Weapon.dagger.damage()
+            case .bow:
+                return Box.Weapon.bow.damage()
+            case .axe:
+                return Box.Weapon.axe.damage()
+            case .gun:
+                return Box.Weapon.gun.damage()
+            }
+        }
+        else{
             
+            return 0
         }
     }
     
     // Select a 'carePower' at random in box
-    func carePower(atRandom number: Int) -> Box.CarePower {
+    func carePower(atRandom number: Int) -> Int{
         
-        // Switch with "Weapons" enum. See Box.swift file for more details on Weapons enum...
-        switch number {
+        if let choice = Box.CarePower(rawValue: number){
             
-        case 0:
-            return .strong
-        case 1:
-            return .veryStrong
-        default:
-            return .superStrong
+            switch choice {
+                
+            case .strong:
+                return Box.CarePower.strong.care()
+            case .veryStrong:
+                return Box.CarePower.veryStrong.care()
+            case .superStrong:
+                return Box.CarePower.superStrong.care()
+            }
+        }
+        else{
             
+            return 0
         }
     }
 }
