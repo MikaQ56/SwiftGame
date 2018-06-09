@@ -12,28 +12,28 @@ import Foundation
 class Game{
     
     // Players in the game...
-    var players = [Player]()
+    private var players = [Player]()
     
     // Players' max number in the game
-    var playersMax = 2
+    private let playersMax = 2
     
     // Characters created by players to set up their teams
-    var characters = [Character]()
+    private var characters = [Character]()
     
     // List of character types
-    var characterTypes: [CharacterType]
+    private let characterTypes: [CharacterType]
     
     // When the game is over, then the variable 'gameOver' is true
-    var gameOver = false
+    private var gameOver = false
     
     // Rounds' number in the game. Initialized to 0 at the beginning
-    var rounds = 0
+    private var rounds = 0
     
     // Winner's name
-    var winner = String()
+    private var winner = String()
     
     // If players want to create teams automatically
-    var modeAuto = false
+    private var modeAuto = false
     
     init(characterTypes: [CharacterType] ) {
         
@@ -51,7 +51,7 @@ class Game{
     }
     
     // Function for developpement mode...
-    func editPlayersAuto(){
+    private func editPlayersAuto(){
         
         let player1 = Player(name: "Mickael")
         let player2 = Player(name: "Nicolas")
@@ -70,7 +70,7 @@ class Game{
     }
     
     // Introduction of the game at the beginning
-    func description(){
+    private func description(){
         
         print("Bienvenue dans SwiftGame ! Un jeu dans lequel deux équipes vont s'affronter dans un combat à mort. Entrez dans l'arene...\n")
         print("Chaque joueur devra constituer une équipe avec 3 personnages...\n")
@@ -95,7 +95,7 @@ class Game{
     }
     
     // Add player to the game
-    func add(player: Player){
+    private func add(player: Player){
         
         players.append(player)
     }
@@ -118,7 +118,7 @@ class Game{
     }
     
     // Edit players : players' name & teams...
-    func editPlayers(){
+    private func editPlayers(){
         
         // Edit players while players' number max isn't reach
         var index = 0
@@ -161,7 +161,7 @@ class Game{
     }
     
     // Resume the state of players'teams during the game
-    func teamsState(){
+    private func teamsState(){
         
         Style.separatorForTeamState()
         
@@ -183,7 +183,7 @@ class Game{
                         print("\(index+1). \(mage.name), le Mage, a \(mage.health) points de vie et une force de \(mage.strength).\n   Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(mage.care) points de vie\n")
                     }
                     else{
-                        print("\(index+1). \(character.name), le \(character.type), a \(character.health) points de vie et une force de \(character.strength)\n")
+                        print("\(index+1). \(character.name), \(character.type), a \(character.health) points de vie et une force de \(character.strength)\n")
                     }
                 }
             }
@@ -192,7 +192,7 @@ class Game{
     }
     
     // Start the fight !
-    func start(){
+    private func start(){
         
         // Recall teams' state
         teamsState()
@@ -267,7 +267,7 @@ class Game{
     
     
     // Manage fight between Player's characters
-    func fight(index: Int, team: [Character], targetAsInt: Int, choiceAsInt: Int, player: Player){
+    private func fight(index: Int, team: [Character], targetAsInt: Int, choiceAsInt: Int, player: Player){
         
         var targetCharacter: Character
         var targetPlayer: Player
@@ -302,7 +302,7 @@ class Game{
         
     }
     
-    func initalizeStrengthProperty(choiceAsInt: Int, team: [Character]){
+    private func initalizeStrengthProperty(choiceAsInt: Int, team: [Character]){
         
         if let fighter = team[choiceAsInt-1] as? Fighter{
             
@@ -354,7 +354,7 @@ class Game{
         }
     }
     
-    func runStep2AtRandom(choice: Int, team: [Character], index: Int){
+    private func runStep2AtRandom(choice: Int, team: [Character], index: Int){
         
         // Save a number >= 0 & < 6 at random.
         var random = Int(arc4random_uniform(6))
@@ -393,7 +393,7 @@ class Game{
     }
     
     // Select a weapon at random in box
-    func weapon(atRandom number: Int) -> Int{
+    private func weapon(atRandom number: Int) -> Int{
         
         if let choice = Box.Weapon(rawValue: number){
             
@@ -420,7 +420,7 @@ class Game{
     }
     
     // Select a 'carePower' at random in box
-    func carePower(atRandom number: Int) -> Int{
+    private func carePower(atRandom number: Int) -> Int{
         
         if let choice = Box.CarePower(rawValue: number){
             
