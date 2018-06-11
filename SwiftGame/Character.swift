@@ -24,7 +24,7 @@ class Character {
     var type = String()
     
     // Character's Helmet
-    var helmet = [
+    let helmet = [
         "Wooden": 50,
         "Iron": 100,
         "Diamond": 150

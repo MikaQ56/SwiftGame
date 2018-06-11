@@ -12,7 +12,7 @@ import Foundation
 class Player {
     
     // Player's name
-    var name: String
+    let name: String
     
     // Player's team. Array of 'Character' type
     var team = [Character]()
@@ -23,7 +23,7 @@ class Player {
     }
     
     // Add Character player's team
-    func add(character: Character){
+    private func add(character: Character){
         team.append(character)
     }
     
@@ -39,7 +39,7 @@ class Player {
     }
     
     // Edit a Character, return boolean value depending success of operation
-    func createCharacter(){
+    private func createCharacter(){
         
         if let choice = readLine(){
             
@@ -73,7 +73,7 @@ class Player {
         }
     }
     
-    func save(character: Character){
+    private func save(character: Character){
         
          // Add character on player's team
         add(character: character)
@@ -131,7 +131,7 @@ class Player {
     }
     
     // Create character automatically
-    func createCharacterAuto() {
+    private func createCharacterAuto() {
         
         // Define character's names in an array
         let names = ["Hulk", "Iron man", "Gandalf", "Oz", "Tyrion", "Captain America", "Conan", "Gimli"]
