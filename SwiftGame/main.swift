@@ -11,7 +11,7 @@ import Foundation
 let allCases = CharacterType.allCases()
 
 // Initialize game
-let game = Game(characterTypes: allCases)
+let game = Game(characterTypes: allCases, ui: ConsoleUI())
 
 
 // Run the game

@@ -17,6 +17,8 @@ class Player {
     // Player's team. Array of 'Character' type
     var team = [Character]()
     
+    private let ui = game.ui
+    
     // Initialize 'Player' class
     init(name: String){
         self.name = name
@@ -45,25 +47,21 @@ class Player {
             
             let choiceAsInt = game.check(choice: choice, choiceMax: 4)
             
-            print("\nQuel sera son nom ?")
+            ui.characterName()
             
             if var characterName = readLine(){
                 
                 // Check character'name typed by player
                 while characterName == "" {
                     
-                    Style.separatorForFlash()
-                    print("Vous devez donner un nom à votre personnage ! Entrez un nom :")
-                    Style.separatorForFlash()
+                    ui.characterNameEmpty()
                     characterName = readLine()!
                 }
                 
                 // Is there already character with the same name ?
                 while game.characterNameExists(name: characterName){
                     
-                    Style.separatorForFlash()
-                    print("Ce nom existe déjà dans la partie. Choisissez un autre nom :")
-                    Style.separatorForFlash()
+                    ui.characterNameExists()
                     characterName = readLine()!
                 }
                 
@@ -82,7 +80,7 @@ class Player {
         game.add(character: character)
         
         // Confirm success operation
-        print("\n\(character.name), \(character.type), a bien été ajouté à votre équipe.")
+        ui.characterCreated(character: character)
     }
     
     func createTeam(){
@@ -125,9 +123,7 @@ class Player {
         }
         
         // Confirmation
-        Style.separatorForFlash()
-        print("\(name), votre équipe est constituée !")
-        Style.separatorForFlash()
+        ui.teamCreated(name: name)
     }
     
     // Create character automatically

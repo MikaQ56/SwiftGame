@@ -13,7 +13,7 @@ class Fighter: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = Box.Weapon.dagger.damage()
+        strength = Box.Weapon.lance.damage()
         health = helmet["Iron"]!
         type = CharacterType.fighter.description()
         

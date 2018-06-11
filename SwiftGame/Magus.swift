@@ -25,4 +25,10 @@ class Magus: Character {
         print("Le Mage a soigné \(target.name). Ce dernier a récupéré \(care) points de vie !")
         Style.separatorForFlash()
     }
+    
+    override func introduction() {
+        
+        super.introduction()
+        print("Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(self.care) points de vie\n")
+    }
 }
