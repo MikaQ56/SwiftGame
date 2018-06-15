@@ -13,7 +13,7 @@ class Colossus: Character {
     
     override init(name: String){
         super.init(name: name)
-        strength = Box.Weapon.lance.damage()
+        strength = Box.Weapon.dagger.damage()
         health = helmet["Diamond"]!
         type = CharacterType.colossus.description()
     }

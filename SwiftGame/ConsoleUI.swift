@@ -131,9 +131,22 @@ class ConsoleUI: UI {
         return player.team[choiceAsInt-1]
     }
     
+    func selectCharacterToCare(players: [Player], index: Int) -> Character {
+        
+        print("Choisis un personnage de ton équipe que tu souhaites soigner :\n")
+        
+        let targetIndex = readLine()!
+        
+        var teamPlayer = players[index].team
+        
+        let targetAsInt = check(choice: targetIndex, choiceMax: teamPlayer.count)
+        
+        return teamPlayer[targetAsInt-1]
+    }
+    
     func selectOpponentCharacter(players: [Player], index: Int) -> Character {
         
-        print("Choisis une cible dans l'équipe adverse...\nOu un personnage de ton équipe si tu viens de sélectionner un Mage :\n")
+        print("Choisis une cible dans l'équipe adverse :\n")
         
         let targetIndex = readLine()!
             

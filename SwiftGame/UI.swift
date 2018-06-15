@@ -32,6 +32,8 @@ protocol UI {
     
     func selectCharacter(from player: Player) -> Character
     
+    func selectCharacterToCare(players: [Player], index: Int) -> Character
+    
     func selectOpponentCharacter(players: [Player], index: Int) -> Character
     
     func gameIsOver(winner: String, rounds: Int)

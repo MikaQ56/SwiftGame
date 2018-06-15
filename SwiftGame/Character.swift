@@ -39,7 +39,7 @@ class Character {
     // Character's greeting
     func introduction(){
         
-        print("\(name), est un \(type), il a une force de \(strength) et \(health) points de vie\n")
+        print("\(name), \(type), a une force de \(strength) et \(health) points de vie\n")
     }
     
     // Character's strike

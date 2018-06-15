@@ -137,28 +137,25 @@ class Game{
                 // Step 2 : Run at random... See runStep2AtRandom function details below
                 runStep2AtRandom(characterPicked: characterPicked, index: index)
                         
-                // Step 3 : Select the opponent character...
-                let characterOpponentPicked = ui.selectOpponentCharacter(players: players, index: index)
-                
-                // Step 4 : fight !
-                // Manage interactions between characters : results of strength, health points...
-                // Separate Mage's case
-                if let magus = characterPicked as? Magus{
-                                    
-                    magus.care(target: characterOpponentPicked)
-                                    
+                // Step 3 : Select the opponent character... Or character to care...
+                if let magus = characterPicked as? Magus {
+                    
+                    let characterToCare = ui.selectCharacterToCare(players: players, index: index)
+                    magus.care(target: characterToCare)
+                    
                     // Initialized Mage's care property in case "step 2 optional" (see previously over) has been accomplished...
                     magus.care = 20
                 }
                 else{
-                            
+                    
+                    let characterOpponentPicked = ui.selectOpponentCharacter(players: players, index: index)
                     fight(index: index, characterOpponentPicked: characterOpponentPicked, characterPicked: characterPicked, player: player)
                 }
+                
+                // Inform on teams'state
+                ui.displayTeamsState(players: players)
             }
             
-            // Inform on teams'state
-            ui.displayTeamsState(players: players)
-                
             // Count the rounds' number
             rounds+=1
         }
@@ -198,9 +195,9 @@ class Game{
     
     private func initalizeStrengthProperty(characterPicked: Character){
         
-        if let fighter = characterPicked as? Fighter{ fighter.strength = Box.Weapon.dagger.damage() }
+        if let fighter = characterPicked as? Fighter{ fighter.strength = Box.Weapon.lance.damage() }
         
-        if let colossus = characterPicked as? Colossus{ colossus.strength = Box.Weapon.lance.damage() }
+        if let colossus = characterPicked as? Colossus{ colossus.strength = Box.Weapon.dagger.damage() }
         
         if let dwarf = characterPicked as? Dwarf{ dwarf.strength = Box.Weapon.axe.damage() }
     }
