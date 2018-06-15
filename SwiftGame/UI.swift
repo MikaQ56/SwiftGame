@@ -10,25 +10,29 @@ import Foundation
 
 protocol UI {
     
-    func introduction()
+    func displayIntroductionMessage()
+    
+    func listCharactersAvailable(from characterTypes: [CharacterType])
     
     func startCreateTeams()
     
-    func playerName(number: Int)
+    func selectAutoMode() -> Bool
     
-    func playerNameEmpty()
+    func askPlayerName(number: Int)
     
-    func playersReady()
+    func editPlayerName() -> Player
     
-    func teamState(to player: Player)
+    func playerNameIsEmpty()
     
-    func teamPlayerIsDead(from player: Player )
+    func playersAreReady()
+    
+    func displayTeamsState(players: [Player])
     
     func startFight()
     
-    func selectCharacter(from player: Player)
+    func selectCharacter(from player: Player) -> Character
     
-    func selectOpponentCharacter()
+    func selectOpponentCharacter(players: [Player], index: Int) -> Character
     
     func gameIsOver(winner: String, rounds: Int)
     
@@ -36,11 +40,11 @@ protocol UI {
     
     func isNotNumber()
     
-    func carePowerIncrease(care: Int)
+    func increaseCarePower(care: Int)
     
     func newWeapon(strength: Int)
     
-    func characterName()
+    func askCharacterName()
     
     func characterNameEmpty()
     
@@ -49,6 +53,8 @@ protocol UI {
     func characterCreated(character: Character)
     
     func teamCreated(name: String)
+    
+    func check(choice: String, choiceMax: Int) -> Int
     
 }
 

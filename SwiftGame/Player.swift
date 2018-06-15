@@ -45,9 +45,9 @@ class Player {
         
         if let choice = readLine(){
             
-            let choiceAsInt = game.check(choice: choice, choiceMax: 4)
+            let choiceAsInt = ui.check(choice: choice, choiceMax: 4)
             
-            ui.characterName()
+            ui.askCharacterName()
             
             if var characterName = readLine(){
                 
@@ -144,22 +144,8 @@ class Player {
         }
         
         // Create character depending the character type selected at random...
-        switch randomIntForTypes{
-        case 0:
-            let fighter = Fighter(name: names[randomIntForNames])
-            save(character: fighter)
-        case 1:
-            let magus = Magus(name: names[randomIntForNames])
-            save(character: magus)
-        case 2:
-            let colossus = Colossus(name: names[randomIntForNames])
-            save(character: colossus)
-        case 3:
-            let dwarf = Dwarf(name: names[randomIntForNames])
-            save(character: dwarf)
-        default:
-            print("\nLe personnage que vous avez choisi n'existe pas.")
-        }
+        let character = CharacterType.edit(choice: randomIntForTypes, characterName: names[randomIntForNames])
+        save(character: character)
         
     }
     

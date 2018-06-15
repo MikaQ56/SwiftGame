@@ -46,66 +46,37 @@ class Game{
     // Game running
     func run(){
         
-        description()
+        introduction()
         
         editPlayers()
         
         start()
     }
     
-    // Function for developpement mode...
-    private func editPlayersAuto(){
-        
-        let player1 = Player(name: "Mickael")
-        let player2 = Player(name: "Nicolas")
-        
-        add(player: player1)
-        add(player: player2)
-        
-        player1.team.append(Fighter(name: "Thor"))
-        player1.team.append(Magus(name: "Oz"))
-        player1.team.append(Colossus(name: "Hulk"))
-        
-        player2.team.append(Fighter(name: "Ryan"))
-        player2.team.append(Magus(name: "Gandalf"))
-        player2.team.append(Dwarf(name: "Tyrion"))
-        
-    }
     
     // Introduction of the game at the beginning
-    private func description(){
+    private func introduction(){
         
-        ui.introduction()
+        // Display introduction message
+        ui.displayIntroductionMessage()
         
-        // List of character types
-        for (index, characterType) in characterTypes.enumerated() {
-            print("\(index+1). "+characterType.description()+"\n")
-        }
+        // Character types' list
+        ui.listCharactersAvailable(from: characterTypes)
         
+        // Let's create teams
         ui.startCreateTeams()
         
         // Option for automatic mode...
-        if let choice = readLine(){
-            let choiceAsInt = check(choice: choice, choiceMax: 2)
-            if choiceAsInt == 1 {
-                modeAuto = true
-            }
-        }
+        modeAuto = ui.selectAutoMode()
     }
     
     // Add player to the game
-    private func add(player: Player){
-        
-        players.append(player)
-    }
+    func add(player: Player){ players.append(player) }
     
     // Add character to the game
-    func add(character: Character){
-        
-        characters.append(character)
-    }
+    func add(character: Character){ characters.append(character) }
     
-    // Is there an other character with the same name ?
+    // Is there an other character with the same name in the game ?
     func characterNameExists(name: String) -> Bool{
         
         for character in characters{
@@ -119,80 +90,38 @@ class Game{
     // Edit players : players' name & teams...
     private func editPlayers(){
         
-        // Edit players while players' number max isn't reach
+        // Edit players while players'number max isn't reach
         var index = 0
         while players.count < playersMax{
             
             // Asking player's name...
-            ui.playerName(number: index)
-            if var playerName = readLine(){
-                
-                // Check that the name is valid..
-                while playerName == ""{
-                    
-                    ui.playerNameEmpty()
-                    playerName = readLine()!
-                }
-                
-                // If name valid, then Player class is initialized and the player added to the game
-                let player = Player(name: playerName)
-                add(player: player)
-                
-                // Check automatic mode before create teams
-                if modeAuto {
-                    player.createTeamAuto()
-                }
-                else{
-                    player.createTeam()
-                }
-                
-            }
+            ui.askPlayerName(number: index)
             
+            // Edit player's name. If player's name format is ok, then Player is initialized & added to the game
+            let player = ui.editPlayerName()
+            add(player: player)
+                
+            // Check automatic mode before create teams
+            if modeAuto {
+                player.createTeamAuto()
+            }
+            else{
+                player.createTeam()
+            }
+    
             index+=1
         }
         
         // Confirm creation of the teams
-        ui.playersReady()
+        ui.playersAreReady()
     }
     
-    // Resume the state of players'teams during the game
-    private func teamsState(){
-        
-        Style.separatorForTeamState()
-        
-        // Loop in players' teams to check team's state
-        for player in players {
-            ui.teamState(to: player)
-            let teamPlayer = player.team
-            
-            // Inform when the team is empty
-            if teamPlayer.isEmpty{
-                ui.teamPlayerIsDead(from: player)
-            }
-                // Give details on team's state
-            else{
-                
-                for (index, character) in teamPlayer.enumerated() {
-                    
-                    if let mage = character as? Magus{
-                        print("\(index+1).")
-                        mage.introduction()
-                    }
-                    else{
-                        print("\(index+1).")
-                        character.introduction()
-                    }
-                }
-            }
-        }
-        Style.separatorForTeamState()
-    }
     
     // Start the fight !
     private func start(){
         
         // Recall teams' state
-        teamsState()
+        ui.displayTeamsState(players: players)
         
         ui.startFight()
         
@@ -201,58 +130,36 @@ class Game{
             
             for (index, player) in players.enumerated() {
                 
-                var team = player.team
                 
                 // Step 1 : Select one character in the player's team
-                ui.selectCharacter(from: player)
-                if let choice = readLine(){
-                    
-                    let choiceAsInt = check(choice: choice, choiceMax: team.count)
-                    
-                    // If first choice is ok, then provide a random step...
-                    // Step 2 : Run at random... See runStep2AtRandom function details below
-                    runStep2AtRandom(choice: choiceAsInt, team: team, index: index)
+                let characterPicked = ui.selectCharacter(from: player)
+                
+                // Step 2 : Run at random... See runStep2AtRandom function details below
+                runStep2AtRandom(characterPicked: characterPicked, index: index)
                         
-                    // Step 3 : Select the opponent character...
-                    ui.selectOpponentCharacter()
+                // Step 3 : Select the opponent character...
+                let characterOpponentPicked = ui.selectOpponentCharacter(players: players, index: index)
                         
-                    // Check the number selected to choose the character
-                    if let targetIndex = readLine(){
-                        
-                        var teamPlayer: [Character]
-                        if index == 0{
-                            
-                            teamPlayer = players[1].team
-                        }
-                        else{
-                            
-                            teamPlayer = players[0].team
-                        }
-                            
-                        let targetAsInt = check(choice: targetIndex, choiceMax: teamPlayer.count)
-                                
-                        // Manage interactions between characters : results of strength, health points...
-                        // Separate Mage's case
-                        if let magus = team[choiceAsInt-1] as? Magus{
+                // Manage interactions between characters : results of strength, health points...
+                // Separate Mage's case
+                if let magus = characterPicked as? Magus{
                                     
-                            magus.care(target: player.team[targetAsInt-1])
+                    magus.care(target: characterOpponentPicked)
                                     
-                            // Initialized Mage's care property in case "step 2 optional" (see previously over) has been accomplished...
-                            magus.care = 20
-                        }
-                        else{
-                            
-                            fight(index: index, team: team, targetAsInt: targetAsInt, choiceAsInt: choiceAsInt, player: player)
-                        }
-                    }
+                    // Initialized Mage's care property in case "step 2 optional" (see previously over) has been accomplished...
+                    magus.care = 20
                 }
-                
-                // Inform on teams'state
-                teamsState()
-                
-                // Count the rounds' number
-                rounds+=1
+                else{
+                            
+                    fight(index: index, characterOpponentPicked: characterOpponentPicked, characterPicked: characterPicked, player: player)
+                }
             }
+            
+            // Inform on teams'state
+            ui.displayTeamsState(players: players)
+                
+            // Count the rounds' number
+            rounds+=1
         }
         
         ui.gameIsOver(winner: winner, rounds: rounds)
@@ -260,24 +167,17 @@ class Game{
     
     
     // Manage fight between Player's characters
-    private func fight(index: Int, team: [Character], targetAsInt: Int, choiceAsInt: Int, player: Player){
+    private func fight(index: Int, characterOpponentPicked: Character, characterPicked: Character, player: Player){
         
-        var targetCharacter: Character
         var targetPlayer: Player
         
         // The target Player depends of loop's index
-        if index == 0 {
-            
-            targetPlayer = players[index+1]
-        }
-        else{
-            
-            targetPlayer = players[0]
-        }
+        if index == 0 { targetPlayer = players[index+1] }
+        else{ targetPlayer = players[0] }
         
         // Save, implement action... See 'strike' function in 'Player' class for more details
-        targetCharacter = targetPlayer.team[targetAsInt-1]
-        team[choiceAsInt-1].strike(target: targetCharacter, player: targetPlayer)
+        
+        characterPicked.strike(target: characterOpponentPicked, player: targetPlayer)
             
         // If all player's characters are dead
         if targetPlayer.team.count == 0{
@@ -291,59 +191,22 @@ class Game{
 
     // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
         
-        initalizeStrengthProperty(choiceAsInt: choiceAsInt, team: team)
+        initalizeStrengthProperty(characterPicked: characterPicked)
         
     }
     
-    private func initalizeStrengthProperty(choiceAsInt: Int, team: [Character]){
+    private func initalizeStrengthProperty(characterPicked: Character){
         
-        if let fighter = team[choiceAsInt-1] as? Fighter{
-            
-            fighter.strength = Box.Weapon.dagger.damage()
-            
-        }
+        if let fighter = characterPicked as? Fighter{ fighter.strength = Box.Weapon.dagger.damage() }
         
-        if let colossus = team[choiceAsInt-1] as? Colossus{
-            
-            colossus.strength = Box.Weapon.lance.damage()
-            
-        }
+        if let colossus = characterPicked as? Colossus{ colossus.strength = Box.Weapon.lance.damage() }
         
-        if let dwarf = team[choiceAsInt-1] as? Dwarf{
-            
-            dwarf.strength = Box.Weapon.axe.damage()
-            
-        }
+        if let dwarf = characterPicked as? Dwarf{ dwarf.strength = Box.Weapon.axe.damage() }
     }
     
-    func check(choice: String, choiceMax: Int) -> Int {
-        
-        if var choiceAsInt = Int(choice){
-            
-            // Check the number selected by player to choose a character in team
-            while choiceAsInt < 1 || choiceAsInt > choiceMax{
-                
-                ui.wrongNumber(numberMax: choiceMax)
-                
-                let newChoice = readLine()!
-                if let newChoice = Int(newChoice){
-                    choiceAsInt = newChoice
-                }
-            }
-            
-            return choiceAsInt
-        }
-        else{
-            
-            ui.isNotNumber()
-            
-            let newChoice = readLine()!
-            let choiceAsInt = check(choice: newChoice, choiceMax: choiceMax)
-            return choiceAsInt
-        }
-    }
     
-    private func runStep2AtRandom(choice: Int, team: [Character], index: Int){
+    
+    private func runStep2AtRandom(characterPicked: Character, index: Int){
         
         // Save a number >= 0 & < 6 at random.
         var random = Int(arc4random_uniform(6))
@@ -354,24 +217,22 @@ class Game{
         if random == index {
             
             //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
-            if let mage = team[choice-1] as? Magus{
-                if random > 2 {
-                    random -= 3
-                }
+            if let mage = characterPicked as? Magus{
+                if random > 2 { random -= 3 }
                 
                 // See the 'carePower' function details below
                 let carePowerAtRandom = carePower(atRandom: random)
                 
                 // Mage's power is increased
                 mage.care = carePowerAtRandom
-                ui.carePowerIncrease(care: carePowerAtRandom)
+                ui.increaseCarePower(care: carePowerAtRandom)
             }
                 // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
             else{
                 
                 // See the 'carePower' function details below
                 let weaponAtRandom = weapon(atRandom: random)
-                team[choice-1].strength = weaponAtRandom
+                characterPicked.strength = weaponAtRandom
                 ui.newWeapon(strength: weaponAtRandom)
             }
         }
@@ -423,6 +284,25 @@ class Game{
             
             return 0
         }
+    }
+    
+    // Function for developpement mode...
+    private func editPlayersAuto(){
+        
+        let player1 = Player(name: "Mickael")
+        let player2 = Player(name: "Nicolas")
+        
+        add(player: player1)
+        add(player: player2)
+        
+        player1.team.append(Fighter(name: "Thor"))
+        player1.team.append(Magus(name: "Oz"))
+        player1.team.append(Colossus(name: "Hulk"))
+        
+        player2.team.append(Fighter(name: "Ryan"))
+        player2.team.append(Magus(name: "Gandalf"))
+        player2.team.append(Dwarf(name: "Tyrion"))
+        
     }
 }
 

@@ -10,11 +10,18 @@ import Foundation
 
 class ConsoleUI: UI {
     
-    func introduction() {
+    func displayIntroductionMessage() {
       
         print("Bienvenue dans SwiftGame ! Un jeu dans lequel deux équipes vont s'affronter dans un combat à mort. Entrez dans l'arene...\n")
         print("Chaque joueur devra constituer une équipe avec 3 personnages...\n")
         print("Voici les personnages existants, et que vous pourrez choisir avec leur numéro :\n")
+    }
+    
+    func listCharactersAvailable(from characterTypes: [CharacterType]) {
+        
+        for (index, characterType) in characterTypes.enumerated() {
+            print("\(index+1). "+characterType.description()+"\n")
+        }
     }
     
     func startCreateTeams() {
@@ -24,34 +31,86 @@ class ConsoleUI: UI {
         print("Souhaitez vous que les équipes soit créées automatiquement ou préférez vous le faire vous même ?\n\n1. Tapez 1 pour le mode Auto\n\n2. Tapez 2 pour le mode manuel\n")
     }
     
-    func playerName(number: Int) {
+    func selectAutoMode() -> Bool {
+        
+        if let choice = readLine(){
+            let choiceAsInt = check(choice: choice, choiceMax: 2)
+            if choiceAsInt == 1 {
+                return true
+            }
+        }
+       
+        return false
+    }
+    
+    func askPlayerName(number: Int) {
         
         print("\nJoueur \(number+1), quel est votre Nom ?")
     }
     
-    func playerNameEmpty() {
+    func editPlayerName() -> Player {
+        
+        var playerName = readLine()!
+            
+        // Check that the name is valid..
+        while playerName == ""{
+                
+            playerNameIsEmpty()
+            playerName = readLine()!
+        }
+            
+        let player = Player(name: playerName)
+            
+        return player
+    }
+    
+    func playerNameIsEmpty() {
         
         Style.separatorForFlash()
         print("\nVous devez entrer un nom. Saisissez à nouveau...\n")
         Style.separatorForFlash()
     }
     
-    func playersReady() {
+    func playersAreReady() {
         
         Style.separatorForFlash()
         print("Les joueurs et leurs équipes sont prêts. Passons au combat !")
         Style.separatorForFlash()
     }
     
-    func teamState(to player: Player){
+    func displayTeamsState(players: [Player]) {
         
-        print("\n*** Etat des troupes de l'équipe de \(player.name) ***\n")
-    }
-    
-    func teamPlayerIsDead(from player: Player){
+        Style.separatorForTeamState()
         
-        print("-- Le joueur \(player.name) n'a plus de personnages. Ils sont tous morts !")
+        // Loop in players' teams to check team's state
+        for player in players {
+            
+            print("\n*** Etat des troupes de l'équipe de \(player.name) ***\n")
+            let teamPlayer = player.team
+            
+            // Inform when the team is empty
+            if teamPlayer.isEmpty{
+                print("-- Le joueur \(player.name) n'a plus de personnages. Ils sont tous morts !")
+            }
+            // Give details on team's state
+            else{
+                
+                for (index, character) in teamPlayer.enumerated() {
+                    
+                    if let mage = character as? Magus{
+                        print("\(index+1).")
+                        mage.introduction()
+                    }
+                    else{
+                        print("\(index+1).")
+                        character.introduction()
+                    }
+                }
+            }
+        }
+        Style.separatorForTeamState()
     }
+
     
     func startFight() {
         
@@ -60,15 +119,32 @@ class ConsoleUI: UI {
         Style.separatorForFlash()
     }
     
-    func selectCharacter(from player: Player) {
+    func selectCharacter(from player: Player) -> Character {
         
         print("A toi de jouer \(player.name) !\n")
         print("Choisis un personnage de ton équipe :\n")
+        
+        let choice = readLine()!
+            
+        let choiceAsInt = check(choice: choice, choiceMax: player.team.count)
+        
+        return player.team[choiceAsInt-1]
     }
     
-    func selectOpponentCharacter() {
+    func selectOpponentCharacter(players: [Player], index: Int) -> Character {
         
         print("Choisis une cible dans l'équipe adverse...\nOu un personnage de ton équipe si tu viens de sélectionner un Mage :\n")
+        
+        let targetIndex = readLine()!
+            
+        var teamPlayer: [Character]
+        
+        if index == 0{ teamPlayer = players[1].team }
+        else{ teamPlayer = players[0].team }
+            
+        let targetAsInt = check(choice: targetIndex, choiceMax: teamPlayer.count)
+        
+        return teamPlayer[targetAsInt-1]
     }
     
     func gameIsOver(winner: String, rounds: Int) {
@@ -92,7 +168,7 @@ class ConsoleUI: UI {
         Style.separatorForFlash()
     }
     
-    func carePowerIncrease(care: Int) {
+    func increaseCarePower(care: Int) {
         
         Style.separatorForFlash()
         print("Le Mage a gagné de l'expérience ! Il peut soigner jusqu'à \(care) \n")
@@ -106,7 +182,7 @@ class ConsoleUI: UI {
         Style.separatorForFlash()
     }
     
-    func characterName() {
+    func askCharacterName() {
         
          print("\nQuel sera son nom ?")
     }
@@ -135,5 +211,32 @@ class ConsoleUI: UI {
         Style.separatorForFlash()
         print("\(name), votre équipe est constituée !")
         Style.separatorForFlash()
+    }
+    
+    func check(choice: String, choiceMax: Int) -> Int {
+        
+        if var choiceAsInt = Int(choice){
+            
+            // Check the number selected by player to choose a character in team
+            while choiceAsInt < 1 || choiceAsInt > choiceMax{
+                
+                wrongNumber(numberMax: choiceMax)
+                
+                let newChoice = readLine()!
+                if let newChoice = Int(newChoice){
+                    choiceAsInt = newChoice
+                }
+            }
+            
+            return choiceAsInt
+        }
+        else{
+            
+            isNotNumber()
+            
+            let newChoice = readLine()!
+            let choiceAsInt = check(choice: newChoice, choiceMax: choiceMax)
+            return choiceAsInt
+        }
     }
 }
