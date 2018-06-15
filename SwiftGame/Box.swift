@@ -33,6 +33,11 @@ enum Box {
                 return 60
             }
         }
+        
+        static func random() -> Weapon {
+            let random = Int.random(6)
+            return Weapon(rawValue: random)!
+        }
     }
     
     enum CarePower: Int {
@@ -50,6 +55,11 @@ enum Box {
             case .superStrong:
                 return 20
             }
+        }
+        
+        static func random() -> CarePower {
+            let random = Int.random(3)
+            return CarePower(rawValue: random)!
         }
     }
 }

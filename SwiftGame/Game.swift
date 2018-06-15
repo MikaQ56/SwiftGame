@@ -139,7 +139,8 @@ class Game{
                         
                 // Step 3 : Select the opponent character...
                 let characterOpponentPicked = ui.selectOpponentCharacter(players: players, index: index)
-                        
+                
+                // Step 4 : fight !
                 // Manage interactions between characters : results of strength, health points...
                 // Separate Mage's case
                 if let magus = characterPicked as? Magus{
@@ -209,7 +210,7 @@ class Game{
     private func runStep2AtRandom(characterPicked: Character, index: Int){
         
         // Save a number >= 0 & < 6 at random.
-        var random = Int(arc4random_uniform(6))
+        var random = Int.random(6)
         
         // Step 2 : Optional...
         // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
@@ -221,70 +222,23 @@ class Game{
                 if random > 2 { random -= 3 }
                 
                 // See the 'carePower' function details below
-                let carePowerAtRandom = carePower(atRandom: random)
+                let carePowerAtRandom = Box.CarePower.random()
                 
                 // Mage's power is increased
-                mage.care = carePowerAtRandom
-                ui.increaseCarePower(care: carePowerAtRandom)
+                mage.care = carePowerAtRandom.care()
+                ui.increaseCarePower(care: mage.care)
             }
-                // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
+            // Other characters. Strength can be increase or decrease.. Depend of the weapon find in the box !
             else{
                 
                 // See the 'carePower' function details below
-                let weaponAtRandom = weapon(atRandom: random)
-                characterPicked.strength = weaponAtRandom
-                ui.newWeapon(strength: weaponAtRandom)
+                let weaponAtRandom = Box.Weapon.random()
+                characterPicked.strength = weaponAtRandom.damage()
+                ui.newWeapon(strength: characterPicked.strength)
             }
         }
     }
     
-    // Select a weapon at random in box
-    private func weapon(atRandom number: Int) -> Int{
-        
-        if let choice = Box.Weapon(rawValue: number){
-            
-            switch choice {
-                
-            case .sword:
-                return Box.Weapon.sword.damage()
-            case .lance:
-                return Box.Weapon.lance.damage()
-            case .dagger:
-                return Box.Weapon.dagger.damage()
-            case .bow:
-                return Box.Weapon.bow.damage()
-            case .axe:
-                return Box.Weapon.axe.damage()
-            case .gun:
-                return Box.Weapon.gun.damage()
-            }
-        }
-        else{
-            
-            return 0
-        }
-    }
-    
-    // Select a 'carePower' at random in box
-    private func carePower(atRandom number: Int) -> Int{
-        
-        if let choice = Box.CarePower(rawValue: number){
-            
-            switch choice {
-                
-            case .strong:
-                return Box.CarePower.strong.care()
-            case .veryStrong:
-                return Box.CarePower.veryStrong.care()
-            case .superStrong:
-                return Box.CarePower.superStrong.care()
-            }
-        }
-        else{
-            
-            return 0
-        }
-    }
     
     // Function for developpement mode...
     private func editPlayersAuto(){
