@@ -44,7 +44,11 @@ protocol UI {
     
     func newWeapon(strength: Int)
     
-    func askCharacterName()
+    func selectCharacterType(round: Int)
+    
+    func editCharacter() -> Character 
+    
+    func askCharacterName() -> String
     
     func characterNameEmpty()
     

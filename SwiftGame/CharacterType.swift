@@ -31,26 +31,6 @@ enum CharacterType: Int{
         }
     }
     
-    static func edit(choice: Int, characterName: String) -> Character{
-        
-        if let choice = CharacterType(rawValue: choice){
-            
-            switch choice {
-                
-            case .fighter:
-                return Fighter(name: characterName)
-            case .magus:
-                return Magus(name: characterName)
-            case .colossus:
-                return Colossus(name: characterName)
-            case .dwarf:
-                return Dwarf(name: characterName)
-            }
-        }
-        
-        return Fighter(name: characterName)
-    }
-    
     static func allCases() -> [CharacterType]{
         
         var allCases = [CharacterType]()

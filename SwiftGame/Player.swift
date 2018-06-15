@@ -25,9 +25,7 @@ class Player {
     }
     
     // Add Character player's team
-    private func add(character: Character){
-        team.append(character)
-    }
+    private func add(character: Character){ team.append(character) }
     
     // Remove character from player's team
     func delete(characterName: String){
@@ -42,33 +40,9 @@ class Player {
     
     // Edit a Character, return boolean value depending success of operation
     private func createCharacter(){
-        
-        if let choice = readLine(){
-            
-            let choiceAsInt = ui.check(choice: choice, choiceMax: 4)
-            
-            ui.askCharacterName()
-            
-            if var characterName = readLine(){
-                
-                // Check character'name typed by player
-                while characterName == "" {
-                    
-                    ui.characterNameEmpty()
-                    characterName = readLine()!
-                }
-                
-                // Is there already character with the same name ?
-                while game.characterNameExists(name: characterName){
-                    
-                    ui.characterNameExists()
-                    characterName = readLine()!
-                }
-                
-                let character = CharacterType.edit(choice: choiceAsInt, characterName: characterName)
-                save(character: character)
-            }
-        }
+
+        let character = ui.editCharacter()
+        save(character: character)
     }
     
     private func save(character: Character){
@@ -89,27 +63,13 @@ class Player {
         
         // Create characters while the team count is < 3
         while team.count < 3 {
-            
-            
-            switch round{
-            case 1:
-                print("\nChoisissez le premier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
-            case 2:
-                print("\nChoisissez le deuxieme personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
-            case 3:
-                print("\nChoisissez le dernier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
-            default:
-                print("Personnages edités")
-            }
-            
+            ui.selectCharacterType(round: round)
             createCharacter()
             round+=1
         }
         
         // Confirm operation success
-        Style.separatorForFlash()
-        print("\(name), votre équipe est constituée !")
-        Style.separatorForFlash()
+        ui.teamCreated(name: name)
     }
     
     // Function for Bonus ! Create players'teams automatically
@@ -144,7 +104,7 @@ class Player {
         }
         
         // Create character depending the character type selected at random...
-        let character = CharacterType.edit(choice: randomIntForTypes, characterName: names[randomIntForNames])
+        let character = Character.edit(choice: randomIntForTypes, characterName: names[randomIntForNames])
         save(character: character)
         
     }

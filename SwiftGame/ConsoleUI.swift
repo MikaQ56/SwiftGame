@@ -148,7 +148,6 @@ class ConsoleUI: UI {
     }
     
     func gameIsOver(winner: String, rounds: Int) {
-        
         Style.separatorForFlash()
         print("Partie finie ! Bravo \(winner), vous avez gagné. Nombre de tours effectués : \(rounds)")
         Style.separatorForFlash()
@@ -182,9 +181,61 @@ class ConsoleUI: UI {
         Style.separatorForFlash()
     }
     
-    func askCharacterName() {
+    func selectCharacterType(round: Int) {
         
-         print("\nQuel sera son nom ?")
+        switch round{
+        case 1:
+            print("\nChoisissez le premier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
+        case 2:
+            print("\nChoisissez le deuxieme personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
+        case 3:
+            print("\nChoisissez le dernier personnage à intégrer votre équipe (donnez le chiffre associé au personnage) :\n")
+        default:
+            print("Personnages edités")
+        }
+    }
+    
+    func editCharacter() -> Character {
+        
+        let choice = readLine()!
+            
+        let choiceAsInt = check(choice: choice, choiceMax: CharacterType.allCases().count)
+            
+        let characterName = askCharacterName()
+        
+        let character = Character.edit(choice: choiceAsInt, characterName: characterName)
+        
+        return character
+    }
+    
+    func askCharacterName() -> String {
+        
+        print("\nQuel sera son nom ?")
+        
+        var characterName = readLine()!
+            
+        // Check character'name typed by player
+        while characterName == "" {
+                
+            characterNameEmpty()
+            characterName = readLine()!
+        }
+            
+        // Is there already character with the same name ?
+        while game.characterNameExists(name: characterName){
+                
+            characterNameExists()
+            characterName = readLine()!
+        }
+        
+        return characterName
+    }
+    
+    func teamCreated(name: String) {
+        
+        Style.separatorForFlash()
+        print("\(name), votre équipe est constituée !")
+        Style.separatorForFlash()
     }
     
     func characterNameEmpty() {
@@ -206,12 +257,6 @@ class ConsoleUI: UI {
         print("\n\(character.name), \(character.type), a bien été ajouté à votre équipe.")
     }
     
-    func teamCreated(name: String) {
-        
-        Style.separatorForFlash()
-        print("\(name), votre équipe est constituée !")
-        Style.separatorForFlash()
-    }
     
     func check(choice: String, choiceMax: Int) -> Int {
         
