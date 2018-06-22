@@ -37,20 +37,19 @@ class Character {
     
     // Character's greeting
     func introduction(){
-        print("\(name), \(type), a une force de \(strength) et \(health) points de vie\n")
+        let message = "\(name), \(type), a une force de \(strength) et \(health) points de vie\n"
+        game.ui.introduceCharacter(message: message)
     }
     
     // Character's strike
     func strike(target: Character, player: Player){
         target.health -= strength
-        Style.separatorForFlash()
-        print("\(name) a attaqué \(target.name). Ce dernier a perdu \(strength) points de vie !")
-        Style.separatorForFlash()
+        let message = "\(name) a attaqué \(target.name). Ce dernier a perdu \(strength) points de vie !"
+        game.ui.displayFightResult(message: message)
         if target.health <= 0 {
             player.delete(characterName: target.name)
-            Style.separatorForFlash()
-            print("\(target.name) n'a pas résisté à l'attaque de \(name). Il est mort !")
-            Style.separatorForFlash()
+            let message = "\(target.name) n'a pas résisté à l'attaque de \(name). Il est mort !"
+            game.ui.characterIsDead(message: message)
         }
     }
     

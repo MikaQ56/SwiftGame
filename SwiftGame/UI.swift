@@ -50,5 +50,11 @@ protocol UI {
     
     func teamCreated(name: String)
     
+    func introduceCharacter(message: String)
+    
+    func displayFightResult(message: String)
+    
+    func characterIsDead(message: String)
+    
 }
 

@@ -183,6 +183,21 @@ class ConsoleUI: UI {
         print("\n\(character.name), \(character.type), a bien été ajouté à votre équipe.")
     }
     
+    func introduceCharacter(message: String) {
+        print(message)
+    }
+    
+    func displayFightResult(message: String) {
+        Style.separatorForFlash()
+        print(message)
+        Style.separatorForFlash()
+    }
+    
+    func characterIsDead(message: String) {
+        Style.separatorForFlash()
+        print(message)
+        Style.separatorForFlash()
+    }
 }
 
 extension ConsoleUI {
