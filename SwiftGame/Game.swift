@@ -87,7 +87,7 @@ class Game{
             ui.askPlayerName(number: index)
             // Edit player's name. If player's name format is ok, then Player is initialized & added to the game
             let playerName = ui.editPlayerName()
-            let player = Player(name: playerName, game: Game(characterTypes: characterTypes, ui: ui))
+            let player = Player(name: playerName)
             add(player: player)
             // Check automatic mode before create teams
             if modeAuto {
@@ -138,8 +138,12 @@ class Game{
     private func fight(index: Int, characterOpponentPicked: Character, characterPicked: Character, player: Player){
         var targetPlayer: Player
         // The target Player depends of loop's index
-        if index == 0 { targetPlayer = players[index+1] }
-        else{ targetPlayer = players[0] }
+        if index == 0{
+            targetPlayer = players[index+1]
+        }
+        else{
+            targetPlayer = players[0]
+        }
         // Save, implement action... See 'strike' function in 'Player' class for more details
         characterPicked.strike(target: characterOpponentPicked, player: targetPlayer)
         // If all player's characters are dead
@@ -149,26 +153,19 @@ class Game{
             // Save the winner's name
             winner = player.name
         }
-    // Initialized character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
-        initalizeStrengthProperty(characterPicked: characterPicked)
-    }
-    
-    private func initalizeStrengthProperty(characterPicked: Character){
-        if let fighter = characterPicked as? Fighter{ fighter.strength = Box.Weapon.lance.damage() }
-        if let colossus = characterPicked as? Colossus{ colossus.strength = Box.Weapon.dagger.damage() }
-        if let dwarf = characterPicked as? Dwarf{ dwarf.strength = Box.Weapon.axe.damage() }
+        // Reset character's strength points default in case "step 2 optional" (see previously over) has been accomplished...
+        characterPicked.resetStrength()
     }
 
     private func runStep2AtRandom(characterPicked: Character, index: Int){
         // Save a number >= 0 & < 6 at random.
-        var random = Int.random(6)
+        let random = Int.random(6)
         // Step 2 : Optional...
         // If this number (random) is equal to the loop'index then the player retrieves a weapon or 'carePower' in the game'box
         // See emum Box in Box.swift file
         if random == index {
             //  Mage character's case. The 'care power' is increased at random. Different levels : 'strong', 'very strong', 'super strong'. See the enum CarePower in Box.swift file
             if let mage = characterPicked as? Magus{
-                if random > 2 { random -= 3 }
                 // See the 'carePower' function details below
                 let carePowerAtRandom = Box.CarePower.random()
                 // Mage's power is increased
@@ -187,8 +184,8 @@ class Game{
     
     // Function for developpement mode...
     private func editPlayersAuto(){
-        let player1 = Player(name: "Mickael", game: Game(characterTypes: characterTypes, ui: ui))
-        let player2 = Player(name: "Nicolas", game: Game(characterTypes: characterTypes, ui: ui))
+        let player1 = Player(name: "Mickael")
+        let player2 = Player(name: "Nicolas")
         add(player: player1)
         add(player: player2)
         player1.team.append(Fighter(name: "Thor"))

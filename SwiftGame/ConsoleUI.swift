@@ -157,22 +157,6 @@ class ConsoleUI: UI {
         return character
     }
     
-    func askCharacterName() -> String {
-        print("\nQuel sera son nom ?")
-        var characterName = readLine()!
-        // Check character'name typed by player
-        while characterName == "" {
-            characterNameEmpty()
-            characterName = readLine()!
-        }
-        // Is there already character with the same name ?
-        while game.characterNameExists(name: characterName){
-            characterNameExists()
-            characterName = readLine()!
-        }
-        return characterName
-    }
-    
     func teamCreated(name: String) {
         Style.separatorForFlash()
         print("\(name), votre équipe est constituée !")
@@ -180,7 +164,7 @@ class ConsoleUI: UI {
     }
     
     func characterCreated(character: Character) {
-        print("\n\(character.name), \(character.type), a bien été ajouté à votre équipe.")
+        print("\n\(character.name), \(character.type!.description()), a bien été ajouté à votre équipe.")
     }
     
     func introduceCharacter(message: String) {
@@ -193,10 +177,20 @@ class ConsoleUI: UI {
         Style.separatorForFlash()
     }
     
+    func displayCareResult(message: String) {
+        Style.separatorForFlash()
+        print(message)
+        Style.separatorForFlash()
+    }
+    
     func characterIsDead(message: String) {
         Style.separatorForFlash()
         print(message)
         Style.separatorForFlash()
+    }
+    
+    func displayCarePower(message: String) {
+        print(message)
     }
 }
 
@@ -212,6 +206,22 @@ extension ConsoleUI {
         Style.separatorForFlash()
         print("Ce nom existe déjà dans la partie. Choisissez un autre nom :")
         Style.separatorForFlash()
+    }
+    
+    private func askCharacterName() -> String {
+        print("\nQuel sera son nom ?")
+        var characterName = readLine()!
+        // Check character'name typed by player
+        while characterName == "" {
+            characterNameEmpty()
+            characterName = readLine()!
+        }
+        // Is there already character with the same name ?
+        while game.characterNameExists(name: characterName){
+            characterNameExists()
+            characterName = readLine()!
+        }
+        return characterName
     }
     
     private func characterNameEmpty() {

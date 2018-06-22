@@ -15,6 +15,6 @@ class Dwarf: Character {
         super.init(name: name)
         strength = Box.Weapon.axe.damage()
         health = helmet["Wooden"]!
-        type = CharacterType.dwarf.description()
+        type = CharacterType.dwarf
     }
 }

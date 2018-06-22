@@ -21,7 +21,7 @@ class Character {
     var strength = 0
     
     // Character's type
-    var type = String()
+    var type: CharacterType?
     
     // Character's Helmet
     let helmet = [
@@ -37,7 +37,7 @@ class Character {
     
     // Character's greeting
     func introduction(){
-        let message = "\(name), \(type), a une force de \(strength) et \(health) points de vie\n"
+        let message = "\(name), \(type!.description()), a une force de \(strength) et \(health) points de vie\n"
         game.ui.introduceCharacter(message: message)
     }
     
@@ -53,6 +53,7 @@ class Character {
         }
     }
     
+    // Players select characters to create team
     static func edit(choice: Int, characterName: String) -> Character{
         if let choice = CharacterType(rawValue: choice){
             switch choice {
@@ -67,5 +68,19 @@ class Character {
             }
         }
         return Fighter(name: characterName)
+    }
+    
+    // Reset strength property if step 2 has runned...
+    func resetStrength() {
+        switch type! {
+        case .colossus:
+            strength = Box.Weapon.dagger.damage()
+        case .dwarf:
+            strength = Box.Weapon.axe.damage()
+        case .fighter:
+            strength = Box.Weapon.lance.damage()
+        default:
+            strength = Box.Weapon.lance.damage()
+        }
     }
 }

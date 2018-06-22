@@ -16,18 +16,18 @@ class Magus: Character {
     override init(name: String){
         super.init(name: name)
         health = helmet["Wooden"]!
-        type = CharacterType.magus.description()
+        type = CharacterType.magus
     }
     
     func care(target: Character){
         target.health += care
-        Style.separatorForFlash()
-        print("Le Mage a soigné \(target.name). Ce dernier a récupéré \(care) points de vie !")
-        Style.separatorForFlash()
+        let message = "Le Mage a soigné \(target.name). Ce dernier a récupéré \(care) points de vie !"
+        game.ui.displayCareResult(message: message)
     }
     
     override func introduction() {
         super.introduction()
-        print("Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(self.care) points de vie\n")
+        let message = "Mais il a un super pouvoir. Il peu soigné ses équipiers en leur redonnant \(self.care) points de vie\n"
+        game.ui.displayCarePower(message: message)
     }
 }

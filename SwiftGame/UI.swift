@@ -44,8 +44,6 @@ protocol UI {
     
     func editCharacter() -> Character 
     
-    func askCharacterName() -> String
-    
     func characterCreated(character: Character)
     
     func teamCreated(name: String)
@@ -53,6 +51,10 @@ protocol UI {
     func introduceCharacter(message: String)
     
     func displayFightResult(message: String)
+    
+    func displayCareResult(message: String)
+
+    func displayCarePower(message: String)
     
     func characterIsDead(message: String)
     

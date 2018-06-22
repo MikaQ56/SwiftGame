@@ -17,13 +17,9 @@ class Player {
     // Player's team. Array of 'Character' type
     var team = [Character]()
     
-    // Game is initialized when Player is initialized
-    private let game: Game
-    
     // Initialize 'Player' class
-    init(name: String, game: Game){
+    init(name: String){
         self.name = name
-        self.game = game
     }
     
     // Add Character to player's team
