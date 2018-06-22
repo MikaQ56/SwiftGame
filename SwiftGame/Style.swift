@@ -13,13 +13,11 @@ class Style {
     
     // Separator line for flash message from the terminal
     static func separatorForFlash(){
-        
        print("\n**************************************************************************************************\n")
     }
     
     // Separator to print team state
     static func separatorForTeamState(){
-        
        print("\n--------------------------------------------------------------------------------------------------\n")
     }
 }

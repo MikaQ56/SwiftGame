@@ -32,24 +32,20 @@ class Character {
     
     // Initialize Character
     init(name: String){
-        
         self.name = name
     }
     
     // Character's greeting
     func introduction(){
-        
         print("\(name), \(type), a une force de \(strength) et \(health) points de vie\n")
     }
     
     // Character's strike
     func strike(target: Character, player: Player){
-        
         target.health -= strength
         Style.separatorForFlash()
         print("\(name) a attaqué \(target.name). Ce dernier a perdu \(strength) points de vie !")
         Style.separatorForFlash()
-        
         if target.health <= 0 {
             player.delete(characterName: target.name)
             Style.separatorForFlash()
@@ -59,11 +55,8 @@ class Character {
     }
     
     static func edit(choice: Int, characterName: String) -> Character{
-        
         if let choice = CharacterType(rawValue: choice){
-            
             switch choice {
-                
             case .fighter:
                 return Fighter(name: characterName)
             case .magus:
@@ -74,7 +67,6 @@ class Character {
                 return Dwarf(name: characterName)
             }
         }
-        
         return Fighter(name: characterName)
     }
 }

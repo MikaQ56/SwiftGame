@@ -16,6 +16,5 @@ class Fighter: Character {
         strength = Box.Weapon.lance.damage()
         health = helmet["Iron"]!
         type = CharacterType.fighter.description()
-        
     }
 }

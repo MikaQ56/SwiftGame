@@ -20,7 +20,7 @@ protocol UI {
     
     func askPlayerName(number: Int)
     
-    func editPlayerName() -> Player
+    func editPlayerName() -> String
     
     func playersAreReady()
     

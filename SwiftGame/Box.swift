@@ -16,9 +16,7 @@ enum Box {
         case sword, lance, dagger, bow, axe, gun
         
         func damage() -> Int{
-            
             switch self {
-                
             case .sword:
                 return 40
             case .lance:
@@ -47,7 +45,6 @@ enum Box {
         func care() -> Int{
             
             switch self {
-                
             case .strong:
                 return 40
             case .veryStrong:

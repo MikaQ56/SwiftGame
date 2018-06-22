@@ -43,15 +43,14 @@ class ConsoleUI: UI {
         print("\nJoueur \(number+1), quel est votre Nom ?")
     }
     
-    func editPlayerName() -> Player {
+    func editPlayerName() -> String {
         var playerName = readLine()!
         // Check that the name is valid..
         while playerName == ""{
             playerNameIsEmpty()
             playerName = readLine()!
         }
-        let player = Player(name: playerName, ui: ConsoleUI())
-        return player
+        return playerName
     }
     
     func playersAreReady() {
@@ -183,6 +182,7 @@ class ConsoleUI: UI {
     func characterCreated(character: Character) {
         print("\n\(character.name), \(character.type), a bien été ajouté à votre équipe.")
     }
+    
 }
 
 extension ConsoleUI {
