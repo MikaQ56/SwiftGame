@@ -17,11 +17,12 @@ class Player {
     // Player's team. Array of 'Character' type
     var team = [Character]()
     
-    private let ui = game.ui
+    private let ui: UI
     
     // Initialize 'Player' class
-    init(name: String){
+    init(name: String, ui: UI){
         self.name = name
+        self.ui = ui
     }
     
     // Add Character player's team

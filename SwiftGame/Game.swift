@@ -35,7 +35,7 @@ class Game{
     // If players want to create teams automatically
     private var modeAuto = false
     
-    let ui: UI
+    private let ui: UI
     
     init(characterTypes: [CharacterType], ui: UI ) {
         
@@ -240,8 +240,8 @@ class Game{
     // Function for developpement mode...
     private func editPlayersAuto(){
         
-        let player1 = Player(name: "Mickael")
-        let player2 = Player(name: "Nicolas")
+        let player1 = Player(name: "Mickael", ui: ui)
+        let player2 = Player(name: "Nicolas", ui: ui)
         
         add(player: player1)
         add(player: player2)

@@ -22,8 +22,6 @@ protocol UI {
     
     func editPlayerName() -> Player
     
-    func playerNameIsEmpty()
-    
     func playersAreReady()
     
     func displayTeamsState(players: [Player])
@@ -38,10 +36,6 @@ protocol UI {
     
     func gameIsOver(winner: String, rounds: Int)
     
-    func wrongNumber(numberMax: Int)
-    
-    func isNotNumber()
-    
     func increaseCarePower(care: Int)
     
     func newWeapon(strength: Int)
@@ -52,15 +46,9 @@ protocol UI {
     
     func askCharacterName() -> String
     
-    func characterNameEmpty()
-    
-    func characterNameExists()
-    
     func characterCreated(character: Character)
     
     func teamCreated(name: String)
-    
-    func check(choice: String, choiceMax: Int) -> Int
     
 }
 
